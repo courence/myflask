@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- Meta -->
+        <meta charset="utf-8">
+        {% block meta %}{% endblock %}
+
+        <title>{% block title %}自省-INTROSPECTION{% endblock %}</title>
+
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Favicons -->
+        <link rel="icon" href="http://www.seakong.cn/img/favicon.ico" type="image/x-icon">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/flexslider.css">
+        <link rel="stylesheet" href="/static/css/animate.css">
+        <link rel="stylesheet" href="/static/css/supersized.css" media="screen">
+        <link href="/static/css/custom.css" rel="stylesheet">
+        {% block css %}{% endblock %}
+	
+
+    </head>
+    <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+
+        <div class="body">
+
+            <!-- Header -->
+            <header>
+                <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header page-scroll">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <a class="navbar-brand" href="/"> <i class="iconfont"></i>
+                            <div class="logozi">
+                                <b>START</b>
+                                <br>
+                                INTROSPECTION
+                            </div> </a>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse navbar-right navbar-main-collapse top-menu">
+                            <ul class="nav navbar-nav">
+                                <li class="page-scroll active">
+                                    <a href="/courence/index/">Courence</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                                <li class="page-scroll active">
+                                    <a href="/task/index/">Task</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                                <li class="page-scroll active">
+                                    <a href="/question/index/">Question</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                                <li class="page-scroll active">
+                                    <a href="/theme/index/">Theme</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <!-- Header -->
+            
+            <!-- Page Header -->
+            {% block pageHeader %}
+			<section class="intro intro-page" id="home" >
+			  <div class="intro-body">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+			          <h3 class="brand-heading">{% block h1 %}{% endblock %}<span class="yah">{% block h2 %}{% endblock %}</span></h3>
+			          <div class="line"></div>
+			          <p class="intro-text"></p>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+			</section>
+			{% endblock %}
+			<!-- Page Header --> 
+            
+			{% block content %}
+			
+			{% endblock %}
+
+            <!-- Footer content -->
+            <footer>
+                <p class="copy">
+                     2016 START
+                </p>
+            </footer>
+            <!-- Footer content -->
+
+        </div>
+
+        <!-- JavaScript Files -->
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/jquery.easing.min.js"></script>
+        <script src="/static/js/jquery.mixitup.min.js"></script>
+        <script src="/static/js/jquery.flexslider.js"></script>
+        <script src="/static/js/supersized.3.2.7.min.js"></script>
+        <script src="/static/js/jquery.animateNumber.js"></script>
+        <script src="/static/js/jquery.appear.js"></script>
+        <script src="/static/js/animations.js"></script>
+        <script src="/static/js/jquery.stellar.min.js"></script>
+        <script src="/static/js/main.js"></script>
+		{% block js %}{% endblock %}
+
+
+    </body>
+</html>

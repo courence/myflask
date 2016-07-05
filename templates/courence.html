@@ -1,0 +1,32 @@
+{% extends "diary/base.html" %}
+{% block css %}
+<link rel="stylesheet" href="/static/plugins/cleditor/jquery.cleditor.css" />
+{% endblock %}
+{% block h1 %}write {% endblock %}
+{% block h2 %}添加{% endblock %}
+{% block content %}
+<!-- Welcome content -->
+<section class="welcome-content">
+	<div class="container">
+        <div class="row">
+	        <form action='.' method='POST'>{% csrf_token %}
+	            <div class="col-md-12 welcome-text animated bounceIn">
+	                <h3>write</h3>
+	                <textarea id='content' name='content' style="height: 300px;">
+	                </textarea>
+	                <input class="btn1" type='submit'  value="submit"/>
+	            </div>
+	        </form>
+        </div>
+    </div>
+    
+</section>
+<!-- Welcome content -->
+{% endblock %}
+
+{% block js %}
+<script src="/static/plugins/cleditor/jquery.cleditor.min.js"></script>
+<script>
+        $(document).ready(function () { $("#content").cleditor(); });
+</script>
+{% endblock %}
