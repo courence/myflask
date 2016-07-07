@@ -8,25 +8,17 @@ Created on Feb 18, 2016
 
 
 from contextlib import closing
-import datetime
-from flask import Flask, request, session, g, redirect, url_for, \
-     abort, render_template, flash
-import os
+from flask import Flask, g, render_template
 import sqlite3
 
+from courence.courence import courenceBlueprint
 
-# configuration
-ROOT = os.path.dirname(os.path.abspath(__file__))
-
-DATABASE = os.path.join(ROOT,'database','myflask.db')
-DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
 
 # create our little application :)
 app = Flask(__name__)
-app.config.from_object(__name__)
+app.config.from_object('config.config')
+app.register_blueprint(courenceBlueprint)
+
 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
@@ -49,21 +41,9 @@ def teardown_request(exception):
     g.db.close()
     
 @app.route('/')
-def show_entries():
-    cur = g.db.execute('select created_at, content from courence order by created_at desc limit 10')
-    entries = [dict(created_at=row[0], content=row[1]) for row in cur.fetchall()]
-    entries.reverse()
-    return render_template('index.html', entries=entries)
+def home():
+    return render_template('index.html')
 
-@app.route('/add', methods=['POST'])
-def add_entry():
-    now = datetime.datetime.now()
-    snow = now.strftime("%Y-%m-%d %H:%M:%S")
-    sdate = now.strftime("%Y-%m-%d")
-    g.db.execute('insert into courence (date, content,user_id,updated_at,created_at) values (?,?,?,?,?)',
-                 [sdate, request.form['content'],1,snow,snow])
-    g.db.commit()
-    return redirect(url_for('show_entries'))
 
 
     
