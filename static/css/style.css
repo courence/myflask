@@ -286,6 +286,16 @@ a:focus {
     width: 85%;
     margin: 30px auto 0;
 }
+.show-content pre {
+	color: #3d3d3d;
+    font-size: 13px;
+    line-height: 22px;
+    width: 85%;
+    margin: 0 auto;
+    padding:9.5px;
+    background-color:#fff;
+    border:0px;
+}
 
 
 .welcome-content h3,.team-content h3, .services-content h3, .portfolio-wrap h3, .testimonial-wrap h3, .contact-wrap h3 {
