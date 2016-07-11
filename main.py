@@ -12,12 +12,14 @@ from flask import Flask, g, render_template
 import sqlite3
 
 from courence.courence import courenceBlueprint
+from task.task import taskBlueprint
 
 
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object('config.config')
 app.register_blueprint(courenceBlueprint)
+app.register_blueprint(taskBlueprint)
 
 
 def connect_db():
