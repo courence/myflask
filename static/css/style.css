@@ -295,6 +295,8 @@ a:focus {
     padding:9.5px;
     background-color:#fff;
     border:0px;
+    white-space: pre-wrap;
+	word-wrap: break-word;
 }
 
 
