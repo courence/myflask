@@ -2,5 +2,6 @@ eclipse.preferences.version=1
 encoding//config/config.py=utf-8
 encoding//courence/courence.py=utf-8
 encoding//task/task.py=utf-8
+encoding//theme/theme.py=utf-8
 encoding/main.py=utf-8
 encoding/test.py=utf-8

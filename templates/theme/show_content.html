@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block pageHeader %}
+<section class="intro" id="home">
+    <div class="cover"></div>
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 animated text-slide fadeIn">
+                    <div id="intro-slider" class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <h3 class="brand-heading">VITALITY</h3>
+                                <div class="line"></div>
+                                <p class="intro-text yah">
+                                    活力， 生命力， 生气， 持久
+                                </p>
+                            </li>
+                            <li>
+                                <h3 class="brand-heading">ACTIVE</h3>
+                                <div class="line"></div>
+                                <p class="intro-text yah">
+                                    积极，活跃，迅速，敏捷
+                                </p>
+                            </li>
+                            <li>
+                                <h3 class="brand-heading">HUMANITY</h3>
+                                <div class="line"></div>
+                                <p class="intro-text yah">
+                                    人性,人道
+                                </p>
+                            </li>
+                          </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block content %}
+
+		
+           {% for entry in entries %}
+            <section class="show-content">
+                <div class="container">
+                    <div class="row">
+                        <div >
+                            
+                            <pre>{{ entry.content }}</pre>
+                            <div class="line11"></div>
+                            <p class="right">
+                                {{ entry.created_at }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {%endfor%}
+            
+            <section class="welcome-content">
+				<div class="container">
+			        <div class="row">
+				        <form action='/theme/{{theme_id}}/add'  method='POST'>
+				            <div class="col-md-12 welcome-text animated bounceIn">
+				                <h3>write</h3>
+				                <textarea class='content' id='content' name='content'></textarea>
+				                <input class="btn1" type='submit'  value="submit"/>
+				            </div>
+				        </form>
+			        </div>
+			    </div>
+			    
+			</section>
+{% endblock %}

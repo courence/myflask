@@ -13,6 +13,7 @@ import sqlite3
 
 from courence.courence import courenceBlueprint
 from task.task import taskBlueprint
+from theme.theme import themeBlueprint
 
 
 # create our little application :)
@@ -20,6 +21,7 @@ app = Flask(__name__)
 app.config.from_object('config.config')
 app.register_blueprint(courenceBlueprint)
 app.register_blueprint(taskBlueprint)
+app.register_blueprint(themeBlueprint)
 
 
 def connect_db():
