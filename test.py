@@ -71,3 +71,4 @@ def add_entry():
 if __name__ == '__main__':
 #     app.run()
     init_db()
+    [{'code':'T0005','table':'vehicle','filed':'enterprise_code','rely_table':'enterprise','rely_filed':'relation','rely_filed2':'station_code','rely_value_filed':'enterprise_code','rely_value_filed2':'station_code','rely_target':'code'}]
