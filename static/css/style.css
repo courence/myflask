@@ -1270,3 +1270,16 @@ article .btn1 {
 /* Note: Design for a width of 480px */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 }
+
+/*********************my97Date********************************/
+
+input.Wdate,.Wdate,body input.Wdate{
+
+	background:#fff url(datePicker.gif) no-repeat right;
+	border:1px solid #ccc;
+}
+
+.WdateFmtErr{
+	font-weight:bold;
+	color:red;
+}

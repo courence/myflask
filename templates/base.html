@@ -107,18 +107,30 @@
         </div>
 
         <!-- JavaScript Files -->
-        <script src="/static/js/jquery.js"></script>
-        <script src="/static/js/bootstrap.min.js"></script>
-        <script src="/static/js/jquery.easing.min.js"></script>
-        <script src="/static/js/jquery.mixitup.min.js"></script>
-        <script src="/static/js/jquery.flexslider.js"></script>
+        <script src="/static/js/common/globalparam.js"></script>
+        <script src="/static/js/plugin/jquery/jquery.js"></script>
+        
+        <script src="/static/js/plugin/bootstrap/bootstrap.min.js"></script>
+        
+        <script src="/static/js/plugin/jquery/jquery.easing.min.js"></script>
+        <script src="/static/js/plugin/jquery/jquery.mixitup.min.js"></script>
+        <script src="/static/js/plugin/jquery/jquery.flexslider.js"></script>
+        <script src="/static/js/plugin/jquery/jquery.animateNumber.js"></script>
+        <script src="/static/js/plugin/jquery/jquery.appear.js"></script>
+        <script src="/static/js/plugin/jquery/jquery.stellar.min.js"></script>
+        
         <script src="/static/js/supersized.3.2.7.min.js"></script>
-        <script src="/static/js/jquery.animateNumber.js"></script>
-        <script src="/static/js/jquery.appear.js"></script>
         <script src="/static/js/animations.js"></script>
-        <script src="/static/js/jquery.stellar.min.js"></script>
         <script src="/static/js/main.js"></script>
-		{% block js %}{% endblock %}
+        
+		{% block js %}
+		<script type="text/javascript">
+		$(document).ready(function(){
+
+		});
+		</script>
+		
+		{% endblock %}
 
 
     </body>
