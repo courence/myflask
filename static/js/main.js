@@ -43,7 +43,7 @@ $(document).ready(function(){
 	    animation: "fade",
 	    controlNav: false,
 	    DirectionNav: false,
-	   slideshowSpeed: 4000,        
+	   slideshowSpeed: 8000,        
 	    animationSpeed: 600  
 	  });
 });

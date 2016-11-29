@@ -26,13 +26,13 @@ def get():
     now = datetime.datetime.now()
     date = now.strftime("%Y-%m-%d")
     sql = '''
-    SELECT content from task 
+    SELECT priority,content from task 
     where type='daily' 
     or ( type='once' and begin_date>=? and end_date<=?) 
     ORDER BY priority
     '''
     cur = g.db.execute(sql,[date,date])
-    entries = [dict(content=row[0]) for row in cur.fetchall()]
+    entries = [dict(priority=row[0],content=row[1]) for row in cur.fetchall()]
     return entries
 #     entries.reverse()
 
@@ -43,7 +43,7 @@ def add():
     begin_date  = request.form['begin_date']
     end_date  = request.form['end_date']
     mtype  = request.form['type']
-    priority = 'A'#ABCD
+    priority = request.form['priority']
     state = 'new'#new,ongoing,complete,unfinished
     content = request.form['content']
     sql = """
