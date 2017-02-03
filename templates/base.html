@@ -16,8 +16,10 @@
         <link rel="icon" href="http://www.seakong.cn/img/favicon.ico" type="image/x-icon">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="/static/css/bootstrap.css">
-        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+        
+        <!--  <link rel="stylesheet" href="/static/css/bootstrap.css">-->
+        <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+
         <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="/static/css/flexslider.css">
         <link rel="stylesheet" href="/static/css/animate.css">
@@ -33,7 +35,7 @@
 
             <!-- Header -->
             <header>
-                <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+                <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" role="navigation">
                     <div class="container">
                         <div class="navbar-header page-scroll">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
@@ -108,19 +110,11 @@
 
         <!-- JavaScript Files -->
         <script src="/static/js/common/globalparam.js"></script>
-        <script src="/static/js/plugin/jquery/jquery.js"></script>
-        
-        <script src="/static/js/plugin/bootstrap/bootstrap.min.js"></script>
-        
-        <script src="/static/js/plugin/jquery/jquery.easing.min.js"></script>
-        <script src="/static/js/plugin/jquery/jquery.mixitup.min.js"></script>
-        <script src="/static/js/plugin/jquery/jquery.flexslider.js"></script>
-        <script src="/static/js/plugin/jquery/jquery.animateNumber.js"></script>
-        <script src="/static/js/plugin/jquery/jquery.appear.js"></script>
-        <script src="/static/js/plugin/jquery/jquery.stellar.min.js"></script>
-        
+        <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+        <script src="//cdn.bootcss.com/flexslider/2.6.3/jquery.flexslider-min.js"></script>
         <script src="/static/js/supersized.3.2.7.min.js"></script>
-        <script src="/static/js/animations.js"></script>
+
         <script src="/static/js/main.js"></script>
         
 		{% block js %}
