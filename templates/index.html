@@ -1,5 +1,41 @@
 {% extends "base.html" %}
-{% block pageHeader %}
-{% include "header/greatestSalesman.html"%}
+{% block content %}
+
+	<section class="show-content">
+		<div class="container">
+			<div class="row">
+				<div id='showtips'>
+				<!-- <p>tipcontent</p> -->
+				</div>
+			</div>
+		</div>
+	</section>
+
 {% endblock %}
 
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				var data = [ 'I will form good habits and become their slave.',
+						'I will greet this day with love in my heart.',
+						'I will persist until I succeed.',
+						"I am nature's greatest miracle.",
+						'I will live this day as if it is my last.',
+						'I will be master of my emotions.',
+						'I will laugh at the world.',
+						'I will multiply my value a hundredfold.',
+						'I will act now.' ];
+				
+				var html_tip = '<p>count , tipcontent</p>';
+				
+				for (var i = 0; i < data.length; i++) {
+					var tmp = html_tip.replace(/count/g,(i+1));
+					tmp = tmp.replace(/tipcontent/g,data[i]);
+					$("#showtips").append(tmp);
+				}
+
+			});
+</script>
+
+{% endblock %}

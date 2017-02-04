@@ -1,95 +1,21 @@
 {% extends "base.html" %}
-
-{% block css %}
-
-{% endblock %}
-{% block pageHeader %}
-
-<section class="intro" id="home">
-    <div class="cover"></div>
-    <div class="intro-body">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 animated text-slide fadeIn">
-                    <div id="intro-slider" class="flexslider">
-                        <ul class="slides">
-                        	{% for task in tasks %}
-                        	<li style="display: list-item;">
-                                <h3 class="brand-heading">{{task.priority}}</h3>
-                                <div class="line"></div>
-                                <p class="intro-text yah">
-                                    {{task.content}}
-                                </p>
-                            </li>
-                        	{%endfor%}
-                          </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}
 {% block content %}
 
 		
-           {% for entry in entries %}
-            <section class="show-content">
-                <div class="container">
-                    <div class="row">
-                        <div >
-                            
-                            <pre>{{ entry.content }}</pre>
-                            <div class="line11"></div>
-                            <p class="right">
-                                {{ entry.created_at }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {%endfor%}
-            
-            <section class="welcome-content">
+           <section class="show-content">
 				<div class="container">
-			        <div class="row">
-				        <form action='/task/add'  method='POST'>
-				            <div class="col-md-12 welcome-text animated bounceIn">
-				                <h3>write</h3>
-				                <textarea class='content' id='content' name='content'></textarea>
-				                
-				                <div class='span12' style='color:black;padding:10px'>
-				                
-				                <select name="priority">
-									<option value="B">B</option>
-									<option value="A">A</option>
-									<option value="C">C</option>
-									<option value="D">D</option>
-								</select>
-				                
-                                 <nobr><input type="radio"  name="type" value="once" checked='checked'/> 一次</nobr>
-                                 <nobr><input type="radio" name="type" value="daily"/> 每天</nobr>
-                      
-                                
-								<nobr><input name='begin_date' id='id_begin_date' type="text" value='{{begin_date}}'/></nobr>
-								<nobr><input name='end_date' id='id_end_date' type="text" value='{{end_date}}'/></nobr>
-								
-								</div>
-				                <input class="btn1" type='submit'  value="submit"/>
-				            </div>
-				        </form>
-			        </div>
-			    </div>
-			    
+					<div class="row">
+						<div>
+						{% for task in tasks %}
+							<p>{{task.priority}},{{task.content}}</p>
+						{%endfor%}
+							<div class="line11"></div>
+                            <p class="right">
+                                <a href="/task/add/index"><i class="icon-plus"></i> </a>
+                            </p>
+						</div>
+					</div>
+				</div>
 			</section>
-{% endblock %}
-{% block js %}
-<script type="text/javascript" src="/static/js/plugin/common/myDate.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
 
-	HSelectDate.bindDate($("#id_begin_date")); 
-	HSelectDate.bindDate($("#id_end_date")); 
-});
-</script>
 {% endblock %}

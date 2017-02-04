@@ -15,11 +15,14 @@ themeBlueprint = Blueprint('theme', __name__,
 def show():
     cur = g.db.execute('select created_at, name,id from theme order by created_at desc limit 10')
     entries = [dict(created_at=row[0], content=row[1],id=row[2]) for row in cur.fetchall()]
-    entries.reverse()
     return render_template('theme/index.html', entries=entries)
 
-@themeBlueprint.route('/theme/add', methods=['POST'])
-def add():
+@themeBlueprint.route('/theme/add/index', methods=['GET'])
+def addIndex():
+    return render_template('theme/addindex.html')
+
+@themeBlueprint.route('/theme/add/do', methods=['POST'])
+def addDo():
     now = datetime.datetime.now()
     snow = now.strftime("%Y-%m-%d %H:%M:%S")
     sdate = now.strftime("%Y-%m-%d")
@@ -38,10 +41,11 @@ def add():
 
 @themeBlueprint.route('/theme/<int:theme_id>/index')
 def show_content(theme_id):
-    cur = g.db.execute('select created_at, content from theme_content where theme_id=? order by created_at desc  limit 10',[theme_id])
+    cur = g.db.execute('select name from theme where id=? ',[theme_id])
+    theme = [dict(name=row[0]) for row in cur.fetchall()][0]
+    cur = g.db.execute('select created_at, content from theme_content where theme_id=? ',[theme_id])
     entries = [dict(created_at=row[0], content=row[1]) for row in cur.fetchall()]
-    entries.reverse()
-    return render_template('theme/show_content.html', entries=entries,theme_id=theme_id)
+    return render_template('theme/show_content.html', entries=entries,theme_id=theme_id,theme=theme)
 
 @themeBlueprint.route('/theme/<int:theme_id>/add', methods=['POST'])
 def add_content(theme_id):

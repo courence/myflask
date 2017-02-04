@@ -1,9 +1,20 @@
 {% extends "base.html" %}
-{% block pageHeader %}
-{% include "header/greatestSalesman.html"%}
-{% endblock %}
-{% block content %}
 
+{% block content %}
+			
+			<section class="show-content">
+                <div class="container">
+                    <div class="row">
+                        <div >
+                        	
+                            <p class="right">
+                                <a href="/courence/add/index"><i class="icon-plus"></i> </a>
+                            </p>
+                            <div class="line11"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 		
            {% for entry in entries %}
             <section class="show-content">
@@ -13,7 +24,7 @@
                             
                             <pre>{{ entry.content }}</pre>
                             <div class="line11"></div>
-                            <p class="right">
+                            <p class="date">
                                 {{ entry.created_at }}
                             </p>
                         </div>
@@ -22,18 +33,5 @@
             </section>
             {%endfor%}
             
-            <section class="welcome-content">
-				<div class="container">
-			        <div class="row">
-				        <form action='/courence/add'  method='POST'>
-				            <div class="col-md-12 welcome-text animated bounceIn">
-				                <h3>write</h3>
-				                <textarea class='content' id='content' name='content'></textarea>
-				                <input class="btn1" type='submit'  value="submit"/>
-				            </div>
-				        </form>
-			        </div>
-			    </div>
-			    
-			</section>
+            
 {% endblock %}

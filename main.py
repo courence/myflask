@@ -12,7 +12,7 @@ from flask import Flask, g, render_template
 import sqlite3
 
 from courence.courence import courenceBlueprint
-from task.task import taskBlueprint
+from task.task import taskBlueprint,getTasks
 from theme.theme import themeBlueprint
 
 
@@ -46,7 +46,8 @@ def teardown_request(exception):
     
 @app.route('/')
 def home():
-    return render_template('index.html')
+    tasks = getTasks()
+    return render_template('index.html',tasks=tasks)
 
 
 

@@ -13,22 +13,18 @@ taskBlueprint = Blueprint('task', __name__,
 
 @taskBlueprint.route('/task/index')
 def show():
-    cur = g.db.execute('select updated_at, content from task order by updated_at desc,priority  limit 10')
-    entries = [dict(created_at=row[0], content=row[1]) for row in cur.fetchall()]
-    entries.reverse()
     now = datetime.datetime.now()
     begin_date = now.strftime("%Y-%m-%d")
     end_date = begin_date
-    tasks = get()
-    return render_template('task/index.html', entries=entries,tasks=tasks,begin_date=begin_date,end_date=end_date)
+    return render_template('task/index.html', tasks=getTasks(),begin_date=begin_date,end_date=end_date)
 
-def get():
+def getTasks():
     now = datetime.datetime.now()
     date = now.strftime("%Y-%m-%d")
     sql = '''
     SELECT priority,content from task 
     where type='daily' 
-    or ( type='once' and begin_date>=? and end_date<=?) 
+    or ( type='once' and begin_date<=? and end_date>=?) 
     ORDER BY priority
     '''
     cur = g.db.execute(sql,[date,date])
@@ -36,8 +32,15 @@ def get():
     return entries
 #     entries.reverse()
 
-@taskBlueprint.route('/task/add', methods=['POST'])
-def add():
+@taskBlueprint.route('/task/add/index', methods=['GET'])
+def addindex():
+    now = datetime.datetime.now()
+    begin_date = now.strftime("%Y-%m-%d")
+    end_date = begin_date
+    return render_template('task/addindex.html',begin_date=begin_date,end_date=end_date)
+
+@taskBlueprint.route('/task/add/do', methods=['POST'])
+def adddo():
     now = datetime.datetime.now()
     snow = now.strftime("%Y-%m-%d %H:%M:%S")
     begin_date  = request.form['begin_date']

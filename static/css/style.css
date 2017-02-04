@@ -2,8 +2,6 @@ body {
     width: 100%;
     height: 100%;
     font-family: "微软雅黑", "Arial Unicode MS";
-    color: #fff;
-    background-color: #000;
 }
 
 .body {
@@ -86,7 +84,7 @@ a:focus {
 
 .top-nav-collapse {
     padding: 0px;
-    background: #fff !important;
+    background: #fafafa  !important;
     padding: 4px 0 14px 0 !important;
     margin: 0px;
     margin: -9px auto;
@@ -245,8 +243,8 @@ a:focus {
 }
 .line11 {
     background: #000;
-    width: 85%;
     height: 1px;
+    width:95%;
     margin: 25px auto;
     position: relative;
     z-index: 1;
@@ -272,32 +270,6 @@ a:focus {
 /* Welcome styles
 ================================================== */
 
-.welcome-content,.show-content {
-    padding: 100px 0;
-    background: #fff;
-    position: relative;
-    z-index:1;
-}
-.show-content p {
-	color: #3d3d3d;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 22px;
-    width: 85%;
-    margin: 30px auto 0;
-}
-.show-content pre {
-	color: #3d3d3d;
-    font-size: 13px;
-    line-height: 22px;
-    width: 85%;
-    margin: 0 auto;
-    padding:9.5px;
-    background-color:#fff;
-    border:0px;
-    white-space: pre-wrap;
-	word-wrap: break-word;
-}
 
 
 .welcome-content h3,.team-content h3, .services-content h3, .portfolio-wrap h3, .testimonial-wrap h3, .contact-wrap h3 {
@@ -784,15 +756,7 @@ a:focus {
     margin: 0 auto;
 }
 
-/* Footer Styles
-================================================== */
 
-footer {
-    padding: 55px 0;
-    background: #222;
-    position: relative;
-    z-index:1;
-}
 
 .social {
     padding: 0px;
@@ -1271,15 +1235,3 @@ article .btn1 {
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 }
 
-/*********************my97Date********************************/
-
-input.Wdate,.Wdate,body input.Wdate{
-
-	background:#fff url(datePicker.gif) no-repeat right;
-	border:1px solid #ccc;
-}
-
-.WdateFmtErr{
-	font-weight:bold;
-	color:red;
-}
