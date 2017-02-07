@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <section class="welcome-content">
+				<div class="container">
+			        <div class="row">
+				        <form action='/courence/add/do'  method='POST'>
+				            <div class="col-md-12  animated bounceIn">
+				                <h3>添加日志</h3>
+				                <textarea class='content' id='content' name='content'></textarea>
+				                <input class="btn1" type='submit'  value="submit"/>
+				            </div>
+				        </form>
+			        </div>
+			    </div>
+			    
+			</section>
+{% endblock %}
