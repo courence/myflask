@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//common/jsonresult.py=utf-8
 encoding//config/config.py=utf-8
 encoding//courence/courence.py=utf-8
 encoding//task/task.py=utf-8

@@ -4,31 +4,49 @@
 Created on Jul 11, 2016
 @author: jh
 '''
-from flask import Blueprint,render_template,g,redirect, url_for,request
 import datetime
+from flask import Blueprint, render_template, g, redirect, url_for, request, jsonify
+
+from common.jsonresult import AjaxResult
+
 
 taskBlueprint = Blueprint('task', __name__,
                         template_folder='templates')
 
 
-@taskBlueprint.route('/task/index')
-def show():
+@taskBlueprint.route('/task/newtasks/index',methods=['GET'])
+def showNewTasks():
+    '''显示待完成的任务页面'''
     now = datetime.datetime.now()
     begin_date = now.strftime("%Y-%m-%d")
     end_date = begin_date
     return render_template('task/index.html', tasks=getTasks(),begin_date=begin_date,end_date=end_date)
 
-def getTasks():
+@taskBlueprint.route('/task/newtasks',methods=['GET'])
+def getNewTasks():
     now = datetime.datetime.now()
     date = now.strftime("%Y-%m-%d")
     sql = '''
-    SELECT priority,content from task 
+    SELECT priority,content,id from task 
     where type='daily' 
     or ( type='once' and begin_date<=? and end_date>=?) 
     ORDER BY priority
     '''
     cur = g.db.execute(sql,[date,date])
-    entries = [dict(priority=row[0],content=row[1]) for row in cur.fetchall()]
+    entries = [dict(priority=row[0],content=row[1],id=row[2]) for row in cur.fetchall()]
+    return AjaxResult.successResult(entries)
+
+def getTasks():
+    now = datetime.datetime.now()
+    date = now.strftime("%Y-%m-%d")
+    sql = '''
+    SELECT priority,content,id from task 
+    where type='daily' 
+    or ( type='once' and begin_date<=? and end_date>=?) 
+    ORDER BY priority
+    '''
+    cur = g.db.execute(sql,[date,date])
+    entries = [dict(priority=row[0],content=row[1],id=row[2]) for row in cur.fetchall()]
     return entries
 #     entries.reverse()
 

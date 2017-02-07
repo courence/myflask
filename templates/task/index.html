@@ -1,21 +1,32 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block content %}
 
-		
-           <section class="show-content">
-				<div class="container">
-					<div class="row">
-						<div>
-						{% for task in tasks %}
-							<p>{{task.priority}},{{task.content}}</p>
-						{%endfor%}
-							<div class="line11"></div>
-                            <p class="right">
-                                <a href="/task/add/index"><i class="icon-plus"></i> </a>
-                            </p>
-						</div>
-					</div>
-				</div>
-			</section>
+<section class="show-content">
+	<div class="container">
+		<div class="row">
+			<div>
+				{% for task in tasks %}
+				<p>
+					{{task.priority}},{{task.content}}<i class="icon-ok"> </i>
+				</p>
+				{%endfor%}
+				<div class="line11"></div>
+				<p class="right">
+					<a href="/task/add/index"><i class="icon-plus"></i> </a>
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
 
+{% endblock %}
+{% block js %}
+
+<script type="text/javascript" src="/static/js//common/myAjax.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	HSelectDate.bindDate($("#id_begin_date")); 
+	HSelectDate.bindDate($("#id_end_date")); 
+});
+</script>
 {% endblock %}
