@@ -94,3 +94,8 @@ footer p{
 .top-nav-collapse .iconfont{font-size:50px;}
 
 
+/**内容标记模块
+================================================== */
+signdiv{
+	display:none;
+}

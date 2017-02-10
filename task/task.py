@@ -17,41 +17,36 @@ taskBlueprint = Blueprint('task', __name__,
 @taskBlueprint.route('/task/newtasks/index',methods=['GET'])
 def showNewTasks():
     '''显示待完成的任务页面'''
-    now = datetime.datetime.now()
-    begin_date = now.strftime("%Y-%m-%d")
-    end_date = begin_date
-    return render_template('task/index.html', tasks=getTasks(),begin_date=begin_date,end_date=end_date)
+    return render_template('task/index.html')
 
 @taskBlueprint.route('/task/newtasks',methods=['GET'])
 def getNewTasks():
-    now = datetime.datetime.now()
-    date = now.strftime("%Y-%m-%d")
+    '''获取待完成任务'''
     sql = '''
-    SELECT priority,content,id from task 
-    where type='daily' 
-    or ( type='once' and begin_date<=? and end_date>=?) 
+    SELECT priority,content,id,state  from task 
+    where type='daily' or state = 'new'
     ORDER BY priority
     '''
-    cur = g.db.execute(sql,[date,date])
-    entries = [dict(priority=row[0],content=row[1],id=row[2]) for row in cur.fetchall()]
+    cur = g.db.execute(sql)
+    entries = [dict(priority=row[0],content=row[1],id=row[2],state=row[3]) for row in cur.fetchall()]
     return AjaxResult.successResult(entries)
 
-def getTasks():
+@taskBlueprint.route('/task/newtasks/<int:taskId>/finish',methods=['PUT'])
+def finish(taskId):
+    '''任务改为完成状态'''
     now = datetime.datetime.now()
-    date = now.strftime("%Y-%m-%d")
+    nowstr = now.strftime("%Y-%m-%d %H:%M:%S")
     sql = '''
-    SELECT priority,content,id from task 
-    where type='daily' 
-    or ( type='once' and begin_date<=? and end_date>=?) 
-    ORDER BY priority
+    update task set state = 'finish',updated_at=? where id=? 
     '''
-    cur = g.db.execute(sql,[date,date])
-    entries = [dict(priority=row[0],content=row[1],id=row[2]) for row in cur.fetchall()]
-    return entries
-#     entries.reverse()
+    g.db.execute(sql,[nowstr,taskId])
+    g.db.commit()
+    return AjaxResult.successResult()
+
 
 @taskBlueprint.route('/task/add/index', methods=['GET'])
 def addindex():
+    '''添加任务页面'''
     now = datetime.datetime.now()
     begin_date = now.strftime("%Y-%m-%d")
     end_date = begin_date
@@ -59,6 +54,7 @@ def addindex():
 
 @taskBlueprint.route('/task/add/do', methods=['POST'])
 def adddo():
+    '''添加任务'''
     now = datetime.datetime.now()
     snow = now.strftime("%Y-%m-%d %H:%M:%S")
     begin_date  = request.form['begin_date']
@@ -75,7 +71,7 @@ def adddo():
     params = [mtype,priority,state,begin_date,end_date,content,1,snow,snow]
     g.db.execute(sql,params)
     g.db.commit()
-    return redirect(url_for('task.show'))
+    return redirect(url_for('task.showNewTasks'))
 
 if __name__ == '__main__':
     pass

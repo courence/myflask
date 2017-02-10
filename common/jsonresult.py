@@ -17,7 +17,7 @@ class AjaxResult:
     def getResult(self):
         return jsonify(state=self.state,data=self.data,msg=self.msg,code=self.code)
     @staticmethod
-    def successResult(data):
+    def successResult(data=None):
         return AjaxResult(True,data).getResult()
     
     @staticmethod

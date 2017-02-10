@@ -5,12 +5,13 @@
 	<div class="container">
 		<div class="row">
 			<div>
-				{% for task in tasks %}
-				<p>
-					{{task.priority}},{{task.content}}<i class="icon-ok"> </i>
-				</p>
-				{%endfor%}
-				<div class="line11"></div>
+				<signdiv>
+					<p>
+						priority,content <a onclick="finish(this,taskId)" href="javascript:;"><i class="icon-ok"> </i></a>
+					</p>
+				</signdiv>
+				
+				<div class="line11" id='contentsign'></div>
 				<p class="right">
 					<a href="/task/add/index"><i class="icon-plus"></i> </a>
 				</p>
@@ -23,10 +24,47 @@
 {% block js %}
 
 <script type="text/javascript" src="/static/js//common/myAjax.js"></script>
+<script type="text/javascript" src="/static/js//common/myString.js"></script>
 <script type="text/javascript">
+
+
+function showNewTasks(){
+	//成功显示内容
+	function successAction(json){
+		if(json.state){
+			var content = $("signdiv").html();
+			var html = "";
+			var data = json.data;
+			for(var i=0;i<data.length;i++){
+				var d = {'priority':data[i].priority,
+						'content':data[i].content,
+						'taskId':data[i].id};
+				html += HString.replace(content,d);
+			}
+			$("#contentsign").before(html);
+		}
+		else{
+			console.error(JSON.stringify(json))
+		}
+	}
+	
+	HAjax.jsonGet('/task/newtasks',{},successAction);
+}
+
+function finish(obj,taskId){
+	function success(json){
+		if(json.state){
+			$(obj).parent('p').remove();
+		}
+		else{
+			console.error(JSON.stringify(json))
+		}
+	}
+	HAjax.jsonPut('/task/newtasks/'+taskId+'/finish',{},success);
+}
+
 $(document).ready(function(){
-	HSelectDate.bindDate($("#id_begin_date")); 
-	HSelectDate.bindDate($("#id_end_date")); 
+	showNewTasks();
 });
 </script>
 {% endblock %}
