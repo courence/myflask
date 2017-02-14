@@ -9,7 +9,7 @@ var HAjax = {
 		$.ajax({
 					type : type,
 					url : url,
-					contentType : contentType,//"application/json; charset=utf-8",
+//					contentType : contentType,//application/x-www-form-urlencoded//"application/json; charset=utf-8",
 					data : data,
 					success : success,
 					error : error,

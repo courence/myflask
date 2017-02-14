@@ -5,7 +5,7 @@ Created on Jul 11, 2016
 @author: jh
 '''
 import datetime
-from flask import Blueprint, render_template, g, redirect, url_for, request, jsonify
+from flask import Blueprint, render_template, g, redirect, url_for, request
 
 from common.jsonresult import AjaxResult
 

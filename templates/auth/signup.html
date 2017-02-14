@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block css %}
+<link rel="stylesheet" href="/static/css/auth/auth.css">
+{% endblock %} {% block body %}
+
+
+<div class="login">
+
+	<div class="page-header">
+		<h1>
+			Sign up <small>Courage And Persistence</small>
+		</h1>
+	</div>
+
+	<div class="row-fluid">
+		<div class="row-form">
+			<div class="span12">
+				<input type="text" id='username' placeholder="username" />
+			</div>
+		</div>
+		<div class="row-form">
+			<div class="span12">
+				<input type="text" id='email'  placeholder="email" />
+			</div>
+		</div>
+		<div class="row-form">
+			<div class="span12">
+				<input type="password" id='password'  placeholder="password" />
+			</div>
+		</div>
+		<div class="row-form">
+			<div class="span12 msg">Sign up message</div>
+		</div>
+		<div class="row-form">
+			<div class="span12">
+				<button class="btn" id='signup'>
+					Sign up <span class="icon-arrow-next icon-white"></span>
+				</button>
+				<a href="/auth/signin" class='floatright'>Sign in</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %} {% block js %}
+<script type="text/javascript" src="/static/js//common/myAjax.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#signup").click(function(){
+			//成功显示内容
+				function successAction(json){
+					if(json.state){
+						var content = $("signdiv").html();
+						var html = "";
+						var data = json.data;
+						for(var i=0;i<data.length;i++){
+							var d = {'priority':data[i].priority,
+									'content':data[i].content,
+									'taskId':data[i].id};
+							html += HString.replace(content,d);
+						}
+						$("#contentsign").before(html);
+					}
+					else{
+						console.error(JSON.stringify(json))
+					}
+				};
+				var data = {
+						username:$("#username").val(),
+						email:$("#email").val(),
+						password:$("#password").val()
+				}
+
+				HAjax.jsonPost('/auth/signup',data);
+		});
+	});
+</script>
+
+{% endblock %}
