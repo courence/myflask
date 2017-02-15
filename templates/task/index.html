@@ -48,7 +48,7 @@ function showNewTasks(){
 		}
 	}
 	
-	HAjax.jsonGet('/task/newtasks',{},successAction);
+	HAjax.jsonGet({url:'/task/newtasks',success:successAction});
 }
 
 function finish(obj,taskId){
@@ -60,7 +60,7 @@ function finish(obj,taskId){
 			console.error(JSON.stringify(json))
 		}
 	}
-	HAjax.jsonPut('/task/newtasks/'+taskId+'/finish',{},success);
+	HAjax.jsonPut({url:'/task/newtasks/'+taskId+'/finish',success:success});
 }
 
 $(document).ready(function(){

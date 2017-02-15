@@ -44,34 +44,77 @@
 
 {% endblock %} {% block js %}
 <script type="text/javascript" src="/static/js//common/myAjax.js"></script>
+<script type="text/javascript" src="/static/js//common/myValid.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#signup").click(function(){
-			//成功显示内容
-				function successAction(json){
-					if(json.state){
-						var content = $("signdiv").html();
-						var html = "";
-						var data = json.data;
-						for(var i=0;i<data.length;i++){
-							var d = {'priority':data[i].priority,
-									'content':data[i].content,
-									'taskId':data[i].id};
-							html += HString.replace(content,d);
-						}
-						$("#contentsign").before(html);
-					}
-					else{
-						console.error(JSON.stringify(json))
-					}
-				};
-				var data = {
-						username:$("#username").val(),
-						email:$("#email").val(),
-						password:$("#password").val()
+		//成功显示内容
+		function successAction(json){
+			if(json.state){
+				var content = $("signdiv").html();
+				var html = "";
+				var data = json.data;
+				for(var i=0;i<data.length;i++){
+					var d = {'priority':data[i].priority,
+							'content':data[i].content,
+							'taskId':data[i].id};
+					html += HString.replace(content,d);
 				}
+				$("#contentsign").before(html);
+			}
+			else{
+				console.error(JSON.stringify(json))
+			}
+		};
 
-				HAjax.jsonPost('/auth/signup',data);
+		function showMsg(msg){
+			$(".msg").html(msg);
+		}
+		function vaildParam(){
+			var username = $("#username").val();
+			var email = $("#email").val();
+			var password = $("#password").val();
+			if(!HValid.isUsername(username)){
+				showMsg('请输入正确的登录名');
+				$("#username").focus();
+				return false;
+			}
+			if(!HValid.isEmail(email)){
+				showMsg('请输入正确的邮箱地址')
+				$("#email").focus();
+				return false;
+			}
+			if(HValid.isBlank(password)){
+				showMsg('请输入正确的密码')
+				$("#password").focus();
+				return false;
+			}
+			return true;
+		}
+		
+		function error(){
+			showMsg('程序内部错误')
+		}
+		
+		function success(json){
+			if(json.state){
+				window.location.href = "/"
+			}
+			else{
+				showMsg(json.msg)
+			}
+		}
+		$("#signup").click(function(){
+			if(!vaildParam())return;
+			var username = $("#username").val();
+			var email = $("#email").val();
+			var password = $("#password").val();
+			var data = {
+					username:$("#username").val(),
+					email:$("#email").val(),
+					password:$("#password").val()
+			}
+
+			HAjax.jsonPost({url:'/auth/signup',data:data,error:error,success:success});
 		});
 	});
 </script>

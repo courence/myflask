@@ -51,7 +51,7 @@ function showCourences(){
 			for(var i=0;i<data.length;i++){
 				var d = {
 						'_content':data[i].content,
-						'_createdAt':data[i].createdAt};
+						'_createdAt':data[i].created_at};
 				html += HString.replace(content,d);
 			}
 			$("#contentsign").after(html);
@@ -61,7 +61,7 @@ function showCourences(){
 		}
 	}
 	
-	HAjax.jsonGet('/courence/latest',{},successAction);
+	HAjax.jsonGet({url:'/courence/latest',success:successAction});
 }
 
 

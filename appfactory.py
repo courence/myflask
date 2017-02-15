@@ -5,7 +5,12 @@ Created on Feb 14, 2017
 @author: jh
 '''
 from flask import Flask
+import os
 from werkzeug.utils import import_string
+
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+os.sys.path.append(ROOT)
 
 extensions = [
     'model.db:db',
@@ -13,9 +18,9 @@ extensions = [
 ]
 
 blueprints = [
-    'courence.courence:courenceBlueprint',
-    'task.task:taskBlueprint',
-    'theme.theme:themeBlueprint',
+    'courence.courenceview:courenceBlueprint',
+    'task.taskview:taskBlueprint',
+    'theme.themeview:themeBlueprint',
     'auth.auth:ahthBlueprint',
 ]
 

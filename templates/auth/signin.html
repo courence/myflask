@@ -16,12 +16,12 @@
 	<div class="row-fluid">
 		<div class="row-form">
 			<div class="span12">
-				<input type="text" name="login" placeholder="username" />
+				<input type="text" id="username" placeholder="username" />
 			</div>
 		</div>
 		<div class="row-form">
 			<div class="span12">
-				<input type="text" name="password" placeholder="password" />
+				<input type="password" id="password" placeholder="password" />
 			</div>
 		</div>
 		<div class="row-form">
@@ -31,7 +31,7 @@
 		</div>
 		<div class="row-form">
 			<div class="span12">
-				<button class="btn">
+				<button class="btn" id='signin'>
 					Sign in <span class="icon-arrow-next icon-white"></span>
 				</button>
 				<a href="/auth/signup" class='floatright'>Sign up</a>
@@ -42,10 +42,72 @@
 
 
 {% endblock %} {% block js %}
+<script type="text/javascript" src="/static/js//common/myAjax.js"></script>
+<script type="text/javascript" src="/static/js//common/myValid.js"></script>
 <script type="text/javascript">
-	$(document).ready(
+$(document).ready(function(){
+	//成功显示内容
+	function successAction(json){
+		if(json.state){
+			var content = $("signdiv").html();
+			var html = "";
+			var data = json.data;
+			for(var i=0;i<data.length;i++){
+				var d = {'priority':data[i].priority,
+						'content':data[i].content,
+						'taskId':data[i].id};
+				html += HString.replace(content,d);
+			}
+			$("#contentsign").before(html);
+		}
+		else{
+			console.error(JSON.stringify(json))
+		}
+	};
 
-	);
+	function showMsg(msg){
+		$(".msg").html(msg);
+	}
+	function vaildParam(){
+		var username = $("#username").val();
+		var password = $("#password").val();
+		if(!HValid.isUsername(username)){
+			showMsg('请输入正确的登录名');
+			$("#username").focus();
+			return false;
+		}
+		if(HValid.isBlank(password)){
+			showMsg('请输入正确的密码')
+			$("#password").focus();
+			return false;
+		}
+		return true;
+	}
+	
+	function error(){
+		showMsg('程序内部错误')
+	}
+	
+	function success(json){
+		if(json.state){
+			window.location.href = "/"
+		}
+		else{
+			showMsg(json.msg)
+		}
+	}
+	$("#signin").click(function(){
+		if(!vaildParam())return;
+		var username = $("#username").val();
+		var password = $("#password").val();
+		var data = {
+				username:$("#username").val(),
+				password:$("#password").val()
+		}
+
+		HAjax.jsonPost({url:'/auth/signin',data:data,error:error,success:success});
+	});
+});
 </script>
 
 {% endblock %}

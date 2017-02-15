@@ -4,47 +4,44 @@ Created on Feb 14, 2017
 
 @author: jh
 '''
-import datetime
+import datetime,hashlib
 from flask.ext.login import UserMixin
+from model.basemethod import BaseMethod
 
 from db import db
-class User(db.Model,UserMixin):
+class User(db.Model,UserMixin,BaseMethod):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), unique=True)
     name = db.Column(db.String(64))
     password = db.Column(db.String(128))
     phone = db.Column(db.String(20))
     email = db.Column(db.String(128), unique=True)
-    is_actice = db.Column(db.Boolean)
+    is_active = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
 
     def __init__(self, username=None, password=None,email=None,phone=None):
+        super(User, self).__init__()
         self.username = username
-        self.password = password
+        self.name = username
+        self.password = md5(password)
         self.email = email
         self.phone = phone
-        self.is_actice = True
+        self.is_active = True
         now = datetime.datetime.now()
-        snow = now.strftime("%Y-%m-%d %H:%M:%S")
-        self.created_at = snow
-        self.updated_at = snow
-        
-    def is_authenticated(self):
-            return True
-
-    def is_actice(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
+        self.created_at = now
+        self.updated_at = now
     
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
+    def validPassword(self,password):
+        return self.password==md5(password)
+    
 
     def __repr__(self):
         return '<User %r>' % self.username
+    
+def md5(src):
+
+    md5 = hashlib.md5()
+    md5.update(src)
+    return md5.hexdigest()
+    

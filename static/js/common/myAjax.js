@@ -2,19 +2,21 @@
  * ajax相关操作
  */
 var HAjax = {
-	/**原始ajax请求*/
-	ajax : function(type,url,contentType,data, success, error,dataType) {
-		if(success==undefined)success=HAjax.success;
-		if(error==undefined)error=HAjax.error;
-		$.ajax({
-					type : type,
-					url : url,
-//					contentType : contentType,//application/x-www-form-urlencoded//"application/json; charset=utf-8",
-					data : data,
-					success : success,
-					error : error,
-					dataType : dataType//"json"
-				});
+	/**原始ajax请求
+	 * {
+	 * 	type : get,post,put,delete,
+	 * 	url : url,
+	 *  contentType : 'application/x-www-form-urlencoded',application/json; charset=utf-8
+	 *  data:{},
+	 *  success:function,
+	 *  error:function,
+	 *  dataType:"json"
+	 * }
+	 * */
+	ajax : function(param) {
+		if(param.success==undefined)param.success=HAjax.success;
+		if(param.error==undefined)param.error=HAjax.error;
+		$.ajax(param);
 	},
 	/**默认调用成功行为*/
 	success : function(data, textStatus) {
@@ -25,15 +27,21 @@ var HAjax = {
 		console.error('调用失败。XMLHttpRequest：'+XMLHttpRequest+';textStatus:'+textStatus+";errorThrown:"+errorThrown);
 	},
 	/** json post */
-	jsonPost : function(url, data, success, error) {
-		HAjax.ajax("post",url,"application/json; charset=utf-8",data, success, error,"json");
+	jsonPost : function(param) {
+		param.type = "post";
+		param.dataType = "json"
+		HAjax.ajax(param);
 	},
 	/** json get */
-	jsonGet : function(url, data, success, error) {
-		HAjax.ajax("get",url,"application/json; charset=utf-8",data, success, error,"json");
+	jsonGet : function(param) {
+		param.type = "get";
+		param.dataType = "json"
+		HAjax.ajax(param);
 	},
 	/** json get */
-	jsonPut : function(url, data, success, error) {
-		HAjax.ajax("put",url,"application/json; charset=utf-8",data, success, error,"json");
+	jsonPut : function(param) {
+		param.type = "put";
+		param.dataType = "json"
+		HAjax.ajax(param);
 	}
 }

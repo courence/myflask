@@ -80,15 +80,23 @@
         <!-- JavaScript Files -->
         <script src="/static/js/common/globalparam.js"></script>
         <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+        {%block prejs%}{% endblock %}
         <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
         <script src="//cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.min.js"></script>
-		<script src="/static/js/main.js"></script>
+		
         
+        <script type="text/javascript">
+        
+        $(document).ready(function(){
+        	//是否登录
+        	window.is_signin = '{{current_user.is_active}}'=='True';
+        });
+        </script>
+        
+        <script src="/static/js/main.js"></script>
 		{% block js %}
 		<script type="text/javascript">
-		$(document).ready(function(){
-			
-		});
+		
 		</script>
 		
 		{% endblock %}

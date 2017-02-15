@@ -4,7 +4,7 @@
 Created on Feb 18, 2016
 @author: jh
 '''
-
+from flask.ext.login import login_required
 
 
 from contextlib import closing
@@ -40,6 +40,7 @@ def teardown_request(exception):
     g.db.close()
     
 @app.route('/')
+@login_required
 def home():
     return render_template('index.html')
 

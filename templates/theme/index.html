@@ -3,7 +3,7 @@
 {% block content %}
 
 			
-			<section class="show-content">
+			<section class="show-content" id='contentsign'>
                 <div class="container">
                     <div class="row">
                         <div >
@@ -16,21 +16,59 @@
                 </div>
             </section>
             
-           {% for entry in entries %}
+           <signdiv>
             <section class="show-content">
                 <div class="container">
                     <div class="row">
                         <div >
                             
-                            <a href='/theme/{{entry.id}}/index'><pre>{{ entry.content }}</pre></a>
+                            <a href='/theme/_id/index'><pre>_content</pre></a>
                             <div class="line11"></div>
                             <p class="date">
-                                {{ entry.created_at }}
+                                _created_at
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
-            {%endfor%}
+            </signdiv>
             
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js//common/myAjax.js"></script>
+<script type="text/javascript" src="/static/js//common/myString.js"></script>
+<script type="text/javascript">
+
+
+function showThemes(){
+	//成功显示内容
+	function successAction(json){
+		if(json.state){
+			var content = $("signdiv").html();
+			var html = "";
+			var data = json.data;
+			for(var i=0;i<data.length;i++){
+				var d = {
+						'_content':data[i].description,
+						'_id':data[i].id,
+						'_created_at':data[i].created_at};
+				html += HString.replace(content,d);
+			}
+			$("#contentsign").after(html);
+		}
+		else{
+			console.error(JSON.stringify(json))
+		}
+	}
+	
+	HAjax.jsonGet({url:'/theme/latest',success:successAction});
+}
+
+
+$(document).ready(function(){
+	showThemes();
+});
+</script>
 {% endblock %}

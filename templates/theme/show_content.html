@@ -2,7 +2,7 @@
 {% block content %}
 
 			
-			<section class="show-content">
+			<section class="show-content" id='contentsign'>
                 <div class="container">
                     <div class="row">
                         <div >
@@ -13,27 +13,27 @@
                 </div>
             </section>
             
-           {% for entry in entries %}
+           <signdiv>
             <section class="show-content">
                 <div class="container">
                     <div class="row">
                         <div >
                             
-                            <pre>{{ entry.content }}</pre>
+                            <pre>_content </pre>
                             <div class="line11"></div>
                             <p class="right">
-                                {{ entry.created_at }}
+                                _created_at 
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
-            {%endfor%}
+            </signdiv>
             
             <section class="welcome-content">
 				<div class="container">
 			        <div class="row">
-				        <form action='/theme/{{theme_id}}/add'  method='POST'>
+				        <form action='/theme/{{theme.id}}/add'  method='POST'>
 				            <div class="col-md-12 animated bounceIn">
 				                <h3>添加评论</h3>
 				                <textarea class='content' id='content' name='content'></textarea>
@@ -44,4 +44,42 @@
 			    </div>
 			    
 			</section>
+			
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js//common/myAjax.js"></script>
+<script type="text/javascript" src="/static/js//common/myString.js"></script>
+<script type="text/javascript">
+
+
+function showCourences(){
+	//成功显示内容
+	function successAction(json){
+		if(json.state){
+			var content = $("signdiv").html();
+			var html = "";
+			var data = json.data;
+			for(var i=0;i<data.length;i++){
+				var d = {
+						'_content':data[i].content,
+						'_createdAt':data[i].created_at};
+				html += HString.replace(content,d);
+			}
+			$("#contentsign").after(html);
+		}
+		else{
+			console.error(JSON.stringify(json))
+		}
+	}
+	
+	HAjax.jsonGet({url:'/theme/{{theme.id}}/content',success:successAction});
+}
+
+
+$(document).ready(function(){
+	showCourences();
+});
+</script>
 {% endblock %}
