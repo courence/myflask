@@ -7,7 +7,7 @@
 			<div>
 				<signdiv>
 					<p>
-						priority,content <a onclick="finish(this,taskId)" href="javascript:;"><i class="icon-ok"> </i></a>
+						priority,content <a onclick="fail(this,taskId)" href="javascript:;"><i class="icon-remove"> </i></a>  <a class='tips' data-placement="top" data-toggle="tooltip" data-original-title="_tips"  onclick="success(this,taskId)" href="javascript:;"><i class="icon-ok"> </i></a>
 					</p>
 				</signdiv>
 				
@@ -28,6 +28,7 @@
 <script type="text/javascript">
 
 
+
 function showNewTasks(){
 	//成功显示内容
 	function successAction(json){
@@ -38,10 +39,12 @@ function showNewTasks(){
 			for(var i=0;i<data.length;i++){
 				var d = {'priority':data[i].priority,
 						'content':data[i].content,
-						'taskId':data[i].id};
+						'taskId':data[i].id,
+						'_tips':data[i].begin_date+"--"+data[i].end_date};
 				html += HString.replace(content,d);
 			}
 			$("#contentsign").before(html);
+			$('.tips').tooltip()
 		}
 		else{
 			console.error(JSON.stringify(json))
@@ -51,7 +54,7 @@ function showNewTasks(){
 	HAjax.jsonGet({url:'/task/newtasks',success:successAction});
 }
 
-function finish(obj,taskId){
+function success(obj,taskId){
 	function success(json){
 		if(json.state){
 			$(obj).parent('p').remove();
@@ -60,7 +63,18 @@ function finish(obj,taskId){
 			console.error(JSON.stringify(json))
 		}
 	}
-	HAjax.jsonPut({url:'/task/newtasks/'+taskId+'/finish',success:success});
+	HAjax.jsonPut({url:'/task/newtasks/'+taskId+'/success',success:success});
+}
+function fail(obj,taskId){
+	function success(json){
+		if(json.state){
+			$(obj).parent('p').remove();
+		}
+		else{
+			console.error(JSON.stringify(json))
+		}
+	}
+	HAjax.jsonPut({url:'/task/newtasks/'+taskId+'/fail',success:success});
 }
 
 $(document).ready(function(){

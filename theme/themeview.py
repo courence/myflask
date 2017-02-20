@@ -39,7 +39,7 @@ def addDo():
     name = description = request.form['content']
     if name:
         Theme(name,description).save()
-    return redirect(url_for('theme.getLatest'))
+    return redirect(url_for('theme.showLatest'))
 
 @themeBlueprint.route('/theme/<int:theme_id>',methods=['get'])
 @login_required

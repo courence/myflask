@@ -11,11 +11,10 @@ from flask.ext.login import current_user
 
 class Task(db.Model,BaseMethod):
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(32))#once/daily
     priority = db.Column(db.String(32))#A/B/C/D
-    state = db.Column(db.String(32))#new/finish
     begin_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
+    sign_date = db.Column(db.Date)
     content = db.Column(db.Text)
     user_code = db.Column(db.String(32))
     remark = db.Column(db.Text)
@@ -23,13 +22,12 @@ class Task(db.Model,BaseMethod):
     created_at = db.Column(db.DateTime)
 
     
-    def __init__(self,content=None,begin_date=None,end_date=None,mtype="once",priority="B"):
-        self.type = mtype
+    def __init__(self,content=None,begin_date=None,end_date=None,priority="B"):
         self.priority = priority
-        self.state = 'new'
         self.user_code = current_user.username
         self.begin_date = self.__getDate(begin_date)
         self.end_date = self.__getDate(end_date)
+        self.sign_date = self.begin_date
         self.content = content
         now = datetime.datetime.now()
         self.created_at = now
