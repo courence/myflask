@@ -28,7 +28,7 @@ def getNewTasks():
     '''获取待完成任务'''
     username = current_user.username
     today = datetime.date.today()
-    tasks = Task.query.filter(Task.user_code==username,Task.end_date >= today,Task.sign_date <= today).order_by(Task.priority,Task.id.desc()).all()
+    tasks = Task.query.filter(Task.user_code==username,Task.sign_date <= today).order_by(Task.priority,Task.id).all()
     return AjaxResult.successResult(tasks)
 
 @taskBlueprint.route('/task/newtasks/<int:taskId>/success',methods=['PUT'])

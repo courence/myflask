@@ -21,7 +21,7 @@
                             
                             <pre>_content </pre>
                             <div class="line11"></div>
-                            <p class="right">
+                            <p class="date">
                                 _created_at 
                             </p>
                         </div>
@@ -64,7 +64,7 @@ function showCourences(){
 			for(var i=0;i<data.length;i++){
 				var d = {
 						'_content':data[i].content,
-						'_createdAt':data[i].created_at};
+						'_created_at':data[i].created_at};
 				html += HString.replace(content,d);
 			}
 			$("#contentsign").after(html);
