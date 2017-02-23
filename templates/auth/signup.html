@@ -116,6 +116,13 @@
 
 			HAjax.jsonPost({url:'/auth/signup',data:data,error:error,success:success});
 		});
+		
+		document.onkeydown = function(e) {
+			var ev = document.all ? window.event : e;
+			if (ev.keyCode == 13) {
+				$('#signup').click();
+			}
+		}
 	});
 </script>
 

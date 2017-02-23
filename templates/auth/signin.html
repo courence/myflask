@@ -1,8 +1,6 @@
-{% extends "base.html" %} 
-{% block css %}
+{% extends "base.html" %} {% block css %}
 <link rel="stylesheet" href="/static/css/auth/auth.css">
-{% endblock %}
-{% block body %}
+{% endblock %} {% block body %}
 
 
 <div class="login">
@@ -25,9 +23,7 @@
 			</div>
 		</div>
 		<div class="row-form">
-			<div class="span12 msg">
-			 Sign in message
-			</div>
+			<div class="span12 msg">Sign in message</div>
 		</div>
 		<div class="row-form">
 			<div class="span12">
@@ -45,69 +41,84 @@
 <script type="text/javascript" src="/static/js//common/myAjax.js"></script>
 <script type="text/javascript" src="/static/js//common/myValid.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	//成功显示内容
-	function successAction(json){
-		if(json.state){
-			var content = $("signdiv").html();
-			var html = "";
-			var data = json.data;
-			for(var i=0;i<data.length;i++){
-				var d = {'priority':data[i].priority,
-						'content':data[i].content,
-						'taskId':data[i].id};
-				html += HString.replace(content,d);
+	$(document).ready(function() {
+		//成功显示内容
+		function successAction(json) {
+			if (json.state) {
+				var content = $("signdiv").html();
+				var html = "";
+				var data = json.data;
+				for (var i = 0; i < data.length; i++) {
+					var d = {
+						'priority' : data[i].priority,
+						'content' : data[i].content,
+						'taskId' : data[i].id
+					};
+					html += HString.replace(content, d);
+				}
+				$("#contentsign").before(html);
+			} else {
+				console.error(JSON.stringify(json))
 			}
-			$("#contentsign").before(html);
 		}
-		else{
-			console.error(JSON.stringify(json))
-		}
-	};
+		;
 
-	function showMsg(msg){
-		$(".msg").html(msg);
-	}
-	function vaildParam(){
-		var username = $("#username").val();
-		var password = $("#password").val();
-		if(!HValid.isUsername(username)){
-			showMsg('请输入正确的登录名');
-			$("#username").focus();
-			return false;
+		function showMsg(msg) {
+			$(".msg").html(msg);
 		}
-		if(HValid.isBlank(password)){
-			showMsg('请输入正确的密码')
-			$("#password").focus();
-			return false;
-		}
-		return true;
-	}
-	
-	function error(){
-		showMsg('程序内部错误')
-	}
-	
-	function success(json){
-		if(json.state){
-			window.location.href = "/"
-		}
-		else{
-			showMsg(json.msg)
-		}
-	}
-	$("#signin").click(function(){
-		if(!vaildParam())return;
-		var username = $("#username").val();
-		var password = $("#password").val();
-		var data = {
-				username:$("#username").val(),
-				password:$("#password").val()
+		function vaildParam() {
+			var username = $("#username").val();
+			var password = $("#password").val();
+			if (!HValid.isUsername(username)) {
+				showMsg('请输入正确的登录名');
+				$("#username").focus();
+				return false;
+			}
+			if (HValid.isBlank(password)) {
+				showMsg('请输入正确的密码')
+				$("#password").focus();
+				return false;
+			}
+			return true;
 		}
 
-		HAjax.jsonPost({url:'/auth/signin',data:data,error:error,success:success});
+		function error() {
+			showMsg('程序内部错误')
+		}
+
+		function success(json) {
+			if (json.state) {
+				window.location.href = "/"
+			} else {
+				showMsg(json.msg)
+			}
+		}
+		$("#signin").click(function() {
+			if (!vaildParam())
+				return;
+			var username = $("#username").val();
+			var password = $("#password").val();
+			var data = {
+				username : $("#username").val(),
+				password : $("#password").val()
+			}
+
+			HAjax.jsonPost({
+				url : '/auth/signin',
+				data : data,
+				error : error,
+				success : success
+			});
+		});
+
+		document.onkeydown = function(e) {
+			var ev = document.all ? window.event : e;
+			if (ev.keyCode == 13) {
+				$('#signin').click();
+			}
+		}
+
 	});
-});
 </script>
 
 {% endblock %}
