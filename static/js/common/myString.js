@@ -10,5 +10,12 @@ var HString = {
 			content = content.replace(pattern,dict[key]);
 		}
 		return content;
+	},
+	trim : function(str) {
+		return str.replace(/(^\s*)|(\s*$)/g, "");
+	},
+	strip : function(str) {
+		return HString.trim(str);
 	}
+	
 }
