@@ -6,7 +6,7 @@ Created on Feb 13, 2017
 '''
 from auth import ahthBlueprint
 from model.usermodel import User
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.signin'

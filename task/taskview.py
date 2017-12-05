@@ -6,7 +6,7 @@ Created on Jul 11, 2016
 '''
 import datetime
 from flask import Blueprint, render_template, g, redirect, url_for, request
-from flask.ext.login import current_user,login_required
+from flask_login import current_user,login_required
 from common.jsonresult import AjaxResult
 from model.taskmodel import Task
 from model.dailytaskmodel import DailyTask

@@ -7,7 +7,6 @@ Created on Feb 7, 2017
 '''
 from flask import jsonify
 import datetime
-from _mysql import NULL
 
 class AjaxResult:
     def __init__(self,state=True,data=None,msg=None ,code=None):

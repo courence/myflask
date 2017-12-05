@@ -8,7 +8,7 @@ import datetime
 from flask import Blueprint, render_template, g, redirect, url_for, request
 
 from common.jsonresult import AjaxResult
-from flask.ext.login import LoginManager, login_required, UserMixin, login_user, logout_user
+from flask_login import LoginManager, login_required, UserMixin, login_user, logout_user
 from model.usermodel import User
 
 

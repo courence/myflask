@@ -5,7 +5,7 @@ Created on Feb 14, 2017
 @author: jh
 '''
 import datetime,hashlib
-from flask.ext.login import UserMixin
+from flask_login import UserMixin
 from model.basemethod import BaseMethod
 
 from db import db

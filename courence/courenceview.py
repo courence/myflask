@@ -8,7 +8,7 @@ Created on Jul 7, 2016
 import datetime
 import json
 from flask import Blueprint, render_template, g, redirect, url_for, request
-from flask.ext.login import current_user,login_required
+from flask_login import current_user,login_required
 from common.jsonresult import AjaxResult,obj2Dict
 from model.courencemodel import Courence
 

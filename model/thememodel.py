@@ -7,7 +7,7 @@ Created on Feb 15, 2017
 from db import db
 import datetime
 from model.basemethod import BaseMethod
-from flask.ext.login import current_user
+from flask_login import current_user
 
 class Theme(db.Model,BaseMethod):
     id = db.Column(db.Integer, primary_key=True)
