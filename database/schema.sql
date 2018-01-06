@@ -67,3 +67,15 @@ create table IF NOT EXISTS  task (
 );
 CREATE INDEX if not EXISTS  "task_themeId_priority_idx"
 ON "task" ("user_id" ASC,"priority" ASC);
+
+create table IF NOT EXISTS  we_image (
+"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, 
+"date" date NOT NULL, 
+"path" varchar(256) NOT NULL,
+"content" varchar(512) NOT NULL,
+"user_code" varchar(64) NOT NULL,
+"updated_at" datetime NOT NULL,
+"created_at" datetime NOT NULL
+);
+CREATE INDEX if not EXISTS  "we_image_priority_idx"
+ON "we_image" ("user_id" ASC,"date" ASC);user_code

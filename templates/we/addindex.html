@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block content %}
+<section class="welcome-content">
+	<div class="container">
+		<div class="row">
+			<form action='/we/add/do' enctype="multipart/form-data" method='POST'>
+				<div class="col-md-12  animated bounceIn">
+					<h3>upload image</h3>
+					<input type="file" name="image" class="projectfile" value="image" />
+					<textarea class='content' id='content' name='content'></textarea>
+					<input class="btn1" type='submit' value="submit" />
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+{% endblock %} {% block js %}
+<link type="text/css" rel="stylesheet" href="/static/plugin/fileinput/fileinput.css" />
+<script type="text/javascript" src="/static/plugin/fileinput/fileinput.js"></script>
+<script type="text/javascript" src="/static/js/common/myAjax.js"></script>
+<script type="text/javascript" src="/static/js/common/myString.js"></script>
+<script type="text/javascript" src="/static/js/plugin/common/baguetteBox.min.js"></script>
+<script type="text/javascript">
+
+	projectfileoptions = {
+		showUpload: false,
+		showRemove: false,
+		language: 'zh',
+		allowedPreviewTypes: ['image'],
+		allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],
+		maxFileSize: 2000,
+	}
+	// 文件上传框
+	$('input[class=projectfile]').each(function () {
+		var imageurl = $(this).attr("value");
+
+		if (imageurl) {
+			var op = $.extend({
+			}, projectfileoptions);
+
+			$(this).fileinput(op);
+		} else {
+			$(this).fileinput(projectfileoptions);
+		}
+	});
+
+
+</script> {% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block content %}
+
+
+<div class="container gallery-container">
+
+    <div >
+        <p class="right">
+            <a href="/web/add/index">
+                <i class="icon-plus"></i>
+            </a>
+        </p>
+        <div class="line11"></div>
+    </div>
+
+    <div class="tz-gallery">
+
+        <div class="row" id='contentsign'>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<signdiv>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <a class="lightbox" href="_imageHref">
+                <img src="_imageSrc" alt="Park">
+            </a>
+            <div class="caption">
+                <h3>_created_at</h3>
+                <p>_content</p>
+            </div>
+        </div>
+    </div>
+</signdiv>
+
+{% endblock %} {% block js %}
+<link rel="stylesheet" type="text/css" href="/static/css/we/htmleaf-demo.css">
+<link rel="stylesheet" href="/static/css/we/baguetteBox.min.css">
+<link rel="stylesheet" href="/static/css/we/thumbnail-gallery.css">
+<script type="text/javascript" src="/static/js/common/myAjax.js"></script>
+<script type="text/javascript" src="/static/js/common/myString.js"></script>
+<script type="text/javascript" src="/static/js/plugin/common/baguetteBox.min.js"></script>
+<script type="text/javascript">
+
+    function showImages() {
+        //æˆ�åŠŸæ˜¾ç¤ºå†…å®¹
+        function successAction(json) {
+            if (json.state) {
+                var content = $("signdiv").html();
+                var html = "";
+                var data = json.data;
+                for (var i = 0; i < data.length; i++) {
+                    var d = {
+                        '_content': data[i].content,
+                        '_created_at': data[i].created_at,
+                        '_imageHref': "/" + data[i].path,
+                        '_imageSrc': "/" + data[i].path
+                    };
+                    html += HString.replace(content, d);
+                }
+                $("#contentsign").append(html);
+                baguetteBox.run('.tz-gallery');
+            }
+            else {
+                console.error(JSON.stringify(json))
+            }
+        }
+
+        HAjax.jsonGet({ url: '/we/latest', success: successAction });
+    }
+
+
+    $(document).ready(function () {
+        showImages();
+
+    });
+
+</script> {% endblock %}

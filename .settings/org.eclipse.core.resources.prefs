@@ -13,6 +13,7 @@ encoding//model/themecontentmodel.py=utf-8
 encoding//model/thememodel.py=utf-8
 encoding//model/usermodel.py=utf-8
 encoding//task/taskview.py=utf-8
+encoding//templates/we/index.html=UTF-8
 encoding//test/test.py=utf-8
 encoding//theme/themeview.py=utf-8
 encoding/appfactory.py=utf-8
