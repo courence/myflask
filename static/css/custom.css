@@ -50,6 +50,14 @@ basecontent{
     padding:0 28px;
     margin: 30px auto 0;
 }
+
+.gallery-container  p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 32px;
+    padding:0 28px;
+    margin: 30px auto 0;
+}
 .show-content pre {
 	color: #3d3d3d;
     font-size: 13px;

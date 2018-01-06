@@ -8,7 +8,6 @@ from flask import Flask
 import os
 from werkzeug.utils import import_string
 
-
 ROOT = os.path.dirname(os.path.abspath(__file__))
 os.sys.path.append(ROOT)
 
@@ -22,6 +21,7 @@ blueprints = [
     'task.taskview:taskBlueprint',
     'theme.themeview:themeBlueprint',
     'auth.auth:ahthBlueprint',
+    'we.weview:weBlueprint',
 ]
 
 

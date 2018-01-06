@@ -1,103 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <!-- Meta -->
-        <meta charset="utf-8">
-		{% block meta %}{% endblock %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-		<title>{% block title %}自省-INTROSPECTION{% endblock %}</title>
+    <!-- Meta -->
+    <meta charset="utf-8"> {% block meta %}{% endblock %}
 
-        <!-- Mobile Metas -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}自省-INTROSPECTION{% endblock %}</title>
 
-        <!-- Favicons -->
-        <link rel="icon" href="http://www.seakong.cn/img/favicon.ico" type="image/x-icon">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- CSS -->
+    <!-- Favicons -->
+    <link rel="icon" href="http://www.seakong.cn/img/favicon.ico" type="image/x-icon">
 
-        <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/static/css/style.css">
-        <link href="/static/css/custom.css" rel="stylesheet">
-        {% block css %}{% endblock %}
+    <!-- CSS -->
 
-	</head>
-    <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
-		{% block body %}
-        <div class="body">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="/static/css/custom.css" rel="stylesheet"> {% block css %}{% endblock %}
 
-            <!-- Header -->
-            <header>
-                <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" role="navigation">
-                    <div class="container">
-                        <div class="navbar-header page-scroll">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                                <i class="icon-align-justify"></i>
-                            </button>
-                            <a class="navbar-brand" href="/"> <i class="iconfont"></i>
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+    {% block body %}
+    <div class="body">
+
+        <!-- Header -->
+        <header>
+            <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" role="navigation">
+                <div class="container">
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                            <i class="icon-align-justify"></i>
+                        </button>
+                        <a class="navbar-brand" href="/">
+                            <i class="iconfont"></i>
                             <div class="logozi">
                                 <b>START</b>
-                                <br>
-                                INTROSPECTION
-                            </div> </a>
-                        </div>
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse navbar-right navbar-main-collapse top-menu">
-                            <ul class="nav navbar-nav">
-                                <li class="page-scroll">
-                                    <a href="/courence/latest/index">COURENCE</a>
-                                </li>
-                                <li class="page-scroll">
-                                    <a href="/task/newtasks/index">TASK</a>
-                                </li>
-                                <li class="page-scroll">
-                                    <a href="/theme/index">THEME</a>
-                                </li>
-                            </ul>
-                            
-                        </div>
+                                <br> INTROSPECTION
+                            </div>
+                        </a>
                     </div>
-                </nav>
-            </header>
-            <basecontent>
-            {% block content %}
-			
-			{% endblock %}
-            </basecontent>
-            
-            <!-- Footer content -->
-            <footer>
-                <p>2016 START</p>
-            </footer>
-            <!-- Footer content -->
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse top-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="page-scroll">
+                                <a href="/courence/latest/index">COURENCE</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="/task/newtasks/index">TASK</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="/theme/index">THEME</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="/we/index">WE</a>
+                            </li>
+                        </ul>
 
-        </div>
-		{% endblock %}
-        <!-- JavaScript Files -->
-        <script src="/static/js/common/globalparam.js"></script>
-        <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-        {%block prejs%}{% endblock %}
-        <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
-        <script src="//cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.min.js"></script>
-		
-        
-        <script type="text/javascript">
-        
-        $(document).ready(function(){
-        	//是否登录
-        	window.is_signin = '{{current_user.is_active}}'=='True';
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <basecontent>
+            {% block content %} {% endblock %}
+        </basecontent>
+
+        <!-- Footer content -->
+        <footer>
+            <p>2016 START</p>
+        </footer>
+        <!-- Footer content -->
+
+    </div>
+    {% endblock %}
+    <!-- JavaScript Files -->
+    <script src="/static/js/common/globalparam.js"></script>
+    <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> {%block prejs%}{% endblock %}
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="//cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //是否登录
+            window.is_signin = '{{current_user.is_active}}' == 'True';
         });
-        </script>
-        
-        <script src="/static/js/main.js"></script>
-		{% block js %}
-		<script type="text/javascript">
-		
-		</script>
-		
-		{% endblock %}
+    </script>
+
+    <script src="/static/js/main.js"></script> {% block js %}
+    <script type="text/javascript">
+
+    </script> {% endblock %}
 
 
-    </body>
+</body>
+
 </html>
