@@ -1,5 +1,6 @@
 !.gitignore
 *.pyc
 .*
+database/myflask.db
 test/
 static/data/
