@@ -1,5 +1,5 @@
 !.gitignore
 *.pyc
-test/
 .*
+test/
 static/data/
