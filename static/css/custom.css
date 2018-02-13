@@ -24,6 +24,10 @@ i {
     background-position: -336px -48px;
 }
 
+.icon-filter {
+    background-position: -408px -144px;
+}
+
 
 .icon-ok {
     background-position: -288px 0;
@@ -47,6 +51,11 @@ basecontent{
     font-size: 16px;
     font-weight: 500;
     line-height: 32px;
+    padding:0 28px;
+    margin: 30px auto 0;
+}
+
+.centerdiv {
     padding:0 28px;
     margin: 30px auto 0;
 }

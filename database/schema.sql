@@ -54,19 +54,17 @@ ON "theme_content" ("theme_id" ASC,"date" ASC);
 
 create table IF NOT EXISTS  task (
 "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, 
-"type" varchar(32) NOT NULL,
 "priority" varchar(32) NOT NULL,
 "state" varchar(32) NOT NULL,
-"begin_date" date NOT NULL, 
-"end_date" date NOT NULL, 
+"date" date NOT NULL, 
 "content" text NOT NULL,
-"user_id" integer NULL,
+"user_code" varchar(32) NULL,
 "remark" varchar(128) NULL,
 "updated_at" datetime NOT NULL,
 "created_at" datetime NOT NULL
 );
 CREATE INDEX if not EXISTS  "task_themeId_priority_idx"
-ON "task" ("user_id" ASC,"priority" ASC);
+ON "task" ("user_code" ASC,"date" ASC);
 
 create table IF NOT EXISTS  we_image (
 "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, 

@@ -1,84 +1,110 @@
-{% extends "base.html" %} 
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <section class="show-content">
 	<div class="container">
 		<div class="row">
-			<div>
-				<signdiv>
-					<p>
-						<tip class='tips' data-placement="top" data-toggle="tooltip" data-original-title="_tips" >priority</tip>,content <a onclick="fail(this,taskId)" href="javascript:;"><i class="icon-remove"> </i></a>  <a onclick="success(this,taskId)" href="javascript:;"><i class="icon-ok"> </i></a>
-					</p>
-				</signdiv>
-				
-				<div class="line11" id='contentsign'></div>
-				<p class="right">
-					<a href="/task/add/index"><i class="icon-plus"></i> </a>
-				</p>
-			</div>
+			<signdiv>
+				<div class='centerdiv'>
+					<div class="btn-group span9">
+						<tip class='tips' data-html="true" data-placement="top" data-toggle="tooltip" data-original-title="_tips_">
+							<button type="button" class="btn btn-large" style="width:100px">_priority_&nbsp;_state_</button>
+						</tip>
+						&nbsp;&nbsp;_content_&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+					<div class="btn-group span3" role="group" aria-label="..." style='float: right;'>
+						_actions_
+					</div>
+					<div style='clear:both'></div>
+				</div>
+			</signdiv>
+			<h4 class="media-heading centerdiv" id='id_title'></h4>
+			<div id='contentsign'></div>
+			<div class="line11"></div>
+			<p class="right">
+				<i class="icon-filter" id='id_date_proxy'>
+					<input style="width:0px;height:0px;border: white;" name='date' id='id_date' type='text' value='{{ today }}' />
+				</i>
+				&nbsp;
+				<a href="/task/add/index">
+					<i class="icon-plus"></i>
+				</a>
+			</p>
 		</div>
 	</div>
 </section>
 
-{% endblock %}
-{% block js %}
-
+{% endblock %} {% block prejs %}
+<script type="text/javascript" src="/static/js/plugin/common/myDate.js"></script> {% endblock %} {% block js %}
+<link href="/static/js/plugin/My97DatePicker/skin/WdatePicker.css" rel="stylesheet">
 <script type="text/javascript" src="/static/js//common/myAjax.js"></script>
 <script type="text/javascript" src="/static/js//common/myString.js"></script>
 <script type="text/javascript">
 
-
-
-function showNewTasks(){
-	//成功显示内容
-	function successAction(json){
-		if(json.state){
-			var content = $("signdiv").html();
-			var html = "";
-			var data = json.data;
-			for(var i=0;i<data.length;i++){
-				var d = {'priority':data[i].priority,
-						'content':data[i].content,
-						'taskId':data[i].id,
-						'_tips':data[i].begin_date+"--"+data[i].end_date};
-				html += HString.replace(content,d);
+	function showNewTasks(force) {
+		var force = force || false;
+		var date = $("#id_date").val();
+		//成功显示内容
+		function successAction(json) {
+			if (json.state) {
+				var content = $("signdiv").html();
+				var html = "";
+				var data = json.data;
+				var tasks = data.tasks;
+				var statedict = {
+					'ToDo': ['Ongoing', 'Done', 'Cancel'],
+					'Ongoing': [],
+					'Done': [],
+					'Cancel': []
+				};
+				var btn = '<button type="button" class="btn btn-default">Ongoing</button>'
+				for (var i = 0; i < tasks.length; i++) {
+					var actions = "";
+					var state = tasks[i].state;
+					for (var j = 0; j < statedict[state].length; j++) {
+						var tstate = statedict[state][j];
+						actions += '<button type="button" onclick="javascript:changestate(' + tasks[i].id + ',\'' + tstate + '\')" class="btn btn-default">' + tstate + '</button>';
+					}
+					var d = {
+						'_priority_': tasks[i].priority,
+						'_content_': tasks[i].content,
+						'_taskId_': tasks[i].id,
+						'_state_': tasks[i].state,
+						'_tips_': tasks[i].created_at + "<br/>" + tasks[i].updated_at,
+						'_actions_': actions
+					};
+					html += HString.replace(content, d);
+				}
+				$("#contentsign").html(html);
+				$('.tips').tooltip()
 			}
-			$("#contentsign").before(html);
-			$('.tips').tooltip()
+			else {
+				console.error(JSON.stringify(json))
+			}
 		}
-		else{
-			console.error(JSON.stringify(json))
+		if (force || window.date != date) {
+			window.date = date;
+			$("#id_title").html('The Task List Of ' + date);
+			HAjax.jsonGet({ url: '/task/' + date, success: successAction });
 		}
 	}
-	
-	HAjax.jsonGet({url:'/task/newtasks',success:successAction});
-}
 
-function success(obj,taskId){
-	function success(json){
-		if(json.state){
-			$(obj).parent('p').remove();
+	function changestate(taskId, state) {
+		function success(json) {
+			if (json.state) {
+				showNewTasks(true);
+			}
+			else {
+				console.error(JSON.stringify(json))
+			}
 		}
-		else{
-			console.error(JSON.stringify(json))
-		}
+		HAjax.jsonPut({ url: '/task/' + taskId + '/' + state, success: success });
 	}
-	HAjax.jsonPut({url:'/task/newtasks/'+taskId+'/success',success:success});
-}
-function fail(obj,taskId){
-	function success(json){
-		if(json.state){
-			$(obj).parent('p').remove();
-		}
-		else{
-			console.error(JSON.stringify(json))
-		}
-	}
-	HAjax.jsonPut({url:'/task/newtasks/'+taskId+'/fail',success:success});
-}
 
-$(document).ready(function(){
-	showNewTasks();
-});
-</script>
-{% endblock %}
+	$(document).ready(function () {
+		showNewTasks();
+		HSelectDate.clickDate($("#id_date_proxy"), $("#id_date"));
+		$("#id_date").blur(function (e) {
+			showNewTasks();
+		});
+	});
+</script> {% endblock %}
