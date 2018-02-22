@@ -1,72 +1,70 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-			
-			<section class="show-content" id='contentsign'>
-                <div class="container">
-                    <div class="row">
-                        <div >
-                        	
-                            <p class="right">
-                                <a href="/courence/add/index"><i class="icon-plus"></i> </a>
-                            </p>
-                            <div class="line11"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-		
-           <signdiv>
-            <section class="show-content">
-                <div class="container">
-                    <div class="row">
-                        <div >
-                            <pre>_content</pre>
-                            <div class="line11"></div>
-                            <p class="date">
-                                _createdAt
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            </signdiv>
-            
-{% endblock %}
+<section class="show-content" id='contentsign'>
+    <div class="container">
+        <div class="row">
+            <div>
 
-{% block js %}
+                <p class="right">
+                    <a href="/courence/add/index">
+                        <i class="icon-plus"></i>
+                    </a>
+                </p>
+                <div class="line11"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<signdiv>
+    <section class="show-content">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <pre>_content</pre>
+                    <div class="line11"></div>
+                    <p class="date">
+                        _createdAt
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</signdiv>
+
+{% endblock %} {% block js %}
 
 <script type="text/javascript" src="/static/js//common/myAjax.js"></script>
 <script type="text/javascript" src="/static/js//common/myString.js"></script>
 <script type="text/javascript">
 
 
-function showCourences(){
-	//成功显示内容
-	function successAction(json){
-		if(json.state){
-			var content = $("signdiv").html();
-			var html = "";
-			var data = json.data;
-			for(var i=0;i<data.length;i++){
-				var d = {
-						'_content':data[i].content,
-						'_createdAt':data[i].created_at};
-				html += HString.replace(content,d);
-			}
-			$("#contentsign").after(html);
-		}
-		else{
-			console.error(JSON.stringify(json))
-		}
-	}
-	
-	HAjax.jsonGet({url:'/courence/latest',success:successAction});
-}
+    function showCourences() {
+        //成功显示内容
+        function successAction(json) {
+            if (json.state) {
+                var content = $("signdiv").html();
+                var html = "";
+                var data = json.data;
+                for (var i = 0; i < data.length; i++) {
+                    var d = {
+                        '_content': data[i].content,
+                        '_createdAt': data[i].created_at                    
+};
+                    html += HString.replace(content, d);
+                }
+                $("#contentsign").after(html);
+            }
+            else {
+                console.error(JSON.stringify(json))
+            }
+        }
+
+        HAjax.jsonGet({ url: '/courence/latest', success: successAction });
+    }
 
 
-$(document).ready(function(){
-	showCourences();
-});
-</script>
-{% endblock %}
+    $(document).ready(function () {
+        showCourences();
+    });
+</script> {% endblock %}

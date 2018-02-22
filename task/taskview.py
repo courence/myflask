@@ -33,7 +33,7 @@ def getNewTasks(date):
         date = datetime.date.today()
     tasks = Task.query.filter(Task.user_code == username,
                               Task.date == date).order_by(
-                                  Task.priority, Task.id).all()
+                                  Task.state, Task.priority, Task.id).all()
     return AjaxResult.successResult({'date': date, 'tasks': obj2Dict(tasks)})
 
 

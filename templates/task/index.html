@@ -7,7 +7,7 @@
 				<div class='centerdiv'>
 					<div class="btn-group span9">
 						<tip class='tips' data-html="true" data-placement="top" data-toggle="tooltip" data-original-title="_tips_">
-							<button type="button" class="btn btn-large" style="width:100px">_priority_&nbsp;_state_</button>
+							<button type="button" class="btn btn-large" style="width:100px;color:_color_">_priority_&nbsp;_state_</button>
 						</tip>
 						&nbsp;&nbsp;_content_&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
@@ -56,7 +56,6 @@
 					'Done': [],
 					'Cancel': []
 				};
-				var btn = '<button type="button" class="btn btn-default">Ongoing</button>'
 				for (var i = 0; i < tasks.length; i++) {
 					var actions = "";
 					var state = tasks[i].state;
@@ -64,13 +63,20 @@
 						var tstate = statedict[state][j];
 						actions += '<button type="button" onclick="javascript:changestate(' + tasks[i].id + ',\'' + tstate + '\')" class="btn btn-default">' + tstate + '</button>';
 					}
+					var color = "#333";
+					if (state == 'Done' || state == "Ongoing") {
+						color = "#3c3"
+					} else if (state == "Cancel") {
+						color = "#c33"
+					}
 					var d = {
 						'_priority_': tasks[i].priority,
 						'_content_': tasks[i].content,
 						'_taskId_': tasks[i].id,
 						'_state_': tasks[i].state,
 						'_tips_': tasks[i].created_at + "<br/>" + tasks[i].updated_at,
-						'_actions_': actions
+						'_actions_': actions,
+						'_color_': color
 					};
 					html += HString.replace(content, d);
 				}
