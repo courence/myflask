@@ -6,12 +6,18 @@ Created on Feb 18, 2016
 '''
 from flask_login import login_required, current_user
 
-from flask import render_template
+from flask import render_template, session
 
 from appfactory import create_app
 import datetime
 
 app = create_app()
+
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = datetime.timedelta(minutes=30)
 
 
 @app.route('/')

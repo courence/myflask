@@ -37,7 +37,7 @@
 <script type="text/javascript" src="/static/js//common/myAjax.js"></script>
 <script type="text/javascript" src="/static/js//common/myString.js"></script>
 <script type="text/javascript">
-
+    CurrentMenuName = "NOTEPAD";
 
     function showCourences() {
         //成功显示内容
@@ -49,8 +49,8 @@
                 for (var i = 0; i < data.length; i++) {
                     var d = {
                         '_content': data[i].content,
-                        '_createdAt': data[i].created_at                    
-};
+                        '_createdAt': data[i].created_at
+                    };
                     html += HString.replace(content, d);
                 }
                 $("#contentsign").after(html);
@@ -59,10 +59,8 @@
                 console.error(JSON.stringify(json))
             }
         }
-
         HAjax.jsonGet({ url: '/courence/latest', success: successAction });
     }
-
 
     $(document).ready(function () {
         showCourences();
