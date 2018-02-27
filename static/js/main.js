@@ -24,7 +24,7 @@ $(document).ready(function () {
 
 	//显示当前菜单
 	function setActiveMenu() {
-		var mainMenuName = CurrentMenuName || $.cookie('mainMenuName');
+		var mainMenuName = CurrentMenuName //|| $.cookie('mainMenuName');
 		if (mainMenuName == null) {
 
 		}
