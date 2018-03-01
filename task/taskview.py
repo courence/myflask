@@ -51,8 +51,10 @@ def changestate(taskId, state):
         task.state = state
         task.save()
         if state == "Ongoing":
-            tomorrow = now + datetime.timedelta(days=1)
-            Task(task.content, tomorrow.date(), task.priority).save()
+            date = now.date()
+            if task.date == date:
+                date = (now + datetime.timedelta(days=1)).date()
+            Task(task.content, date, task.priority, task.created_at).save()
         return AjaxResult.successResult()
     else:
         return AjaxResult.failResult("未获取到相关任务")

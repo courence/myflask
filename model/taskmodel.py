@@ -21,7 +21,7 @@ class Task(db.Model, BaseMethod):
     updated_at = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime)
 
-    def __init__(self, content=None, date=None, priority="B"):
+    def __init__(self, content=None, date=None, priority="B", created_at=None):
         self.priority = priority
         self.user_code = current_user.username
         self.date = self.__getDate(date)
@@ -30,6 +30,8 @@ class Task(db.Model, BaseMethod):
         now = datetime.datetime.now()
         self.created_at = now
         self.updated_at = now
+        if created_at:
+            self.created_at = created_at
 
     def __getDate(self, date):
         try:
