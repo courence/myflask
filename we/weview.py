@@ -8,8 +8,6 @@ import datetime, os
 from flask import Blueprint, render_template, g, redirect, url_for, request
 from flask_login import current_user, login_required
 from common.jsonresult import AjaxResult
-from model.taskmodel import Task
-from model.dailytaskmodel import DailyTask
 from model.weimagemodel import WeImage
 
 weBlueprint = Blueprint('we', __name__, template_folder='templates')
