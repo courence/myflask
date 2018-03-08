@@ -21,11 +21,7 @@
 			<div id='contentsign'></div>
 			<div class="line11"></div>
 			<p class="right">
-				<i class="icon-filter" id='id_date_proxy'>
-					<input style="width:0px;height:0px;border: white;" name='date' id='id_date' type='text' value='{{ today }}' />
-				</i>
-				&nbsp;
-				<a href="/task/plan">
+				<a href="/task/new">
 					<i class="icon-plus"></i>
 				</a>
 			</p>
@@ -40,9 +36,7 @@
 <script type="text/javascript" src="/static/js//common/myString.js"></script>
 <script type="text/javascript">
 	CurrentMenuName = "TASK";
-	function showNewTasks(force) {
-		var force = force || false;
-		var date = $("#id_date").val();
+	function showNewTasks() {
 		//成功显示内容
 		function successAction(json) {
 			if (json.state) {
@@ -52,7 +46,7 @@
 				var tasks = data.tasks;
 				var statedict = {
 					'ToDo': ['Ongoing', 'Done', 'Cancel'],
-					'Ongoing': ['Done', 'Cancel'],
+					'Ongoing': ['Ongoing', 'Done', 'Cancel'],
 					'Done': [],
 					'Cancel': []
 				};
@@ -87,11 +81,9 @@
 				console.error(JSON.stringify(json))
 			}
 		}
-		if (force || window.date != date) {
-			window.date = date;
-			$("#id_title").html('The Task List Of ' + date);
-			HAjax.jsonGet({ url: '/task/' + date, success: successAction });
-		}
+
+		$("#id_title").html('The Plan List');
+		HAjax.jsonGet({ url: '/task/plans', success: successAction });
 	}
 
 	function changestate(taskId, state) {
@@ -108,9 +100,5 @@
 
 	$(document).ready(function () {
 		showNewTasks();
-		HSelectDate.clickDate($("#id_date_proxy"), $("#id_date"));
-		$("#id_date").blur(function (e) {
-			showNewTasks();
-		});
 	});
 </script> {% endblock %}

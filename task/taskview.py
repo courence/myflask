@@ -16,10 +16,29 @@ taskBlueprint = Blueprint('task', __name__, template_folder='templates')
 @taskBlueprint.route('/task/newtasks/index', methods=['GET'])
 @login_required
 def showNewTasks():
-    '''显示待完成的任务页面'''
+    '''show the tasks of today'''
     now = datetime.datetime.now()
     today = datetime.datetime.strftime(now, "%Y-%m-%d")
     return render_template('task/index.html', today=today)
+
+
+@taskBlueprint.route('/task/plan', methods=['GET'])
+@login_required
+def taskPlan():
+    '''planing tasks'''
+    return render_template('task/plan.html')
+
+
+@taskBlueprint.route('/task/plans', methods=['GET'])
+@login_required
+def getplans():
+    '''获取待完成任务'''
+    username = current_user.username
+    date = datetime.date.today()
+    tasks = Task.query.filter(Task.user_code == username, Task.type == "Plan",
+                              Task.state.in_(["ToDo", "Ongoing"])).order_by(
+                                  Task.state, Task.priority, Task.id).all()
+    return AjaxResult.successResult({'date': date, 'tasks': obj2Dict(tasks)})
 
 
 @taskBlueprint.route('/task/<string:date>', methods=['GET'])
@@ -31,8 +50,8 @@ def getNewTasks(date):
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
     except:
         date = datetime.date.today()
-    tasks = Task.query.filter(Task.user_code == username,
-                              Task.date == date).order_by(
+    tasks = Task.query.filter(Task.user_code == username, Task.date == date,
+                              Task.type == "Action").order_by(
                                   Task.state, Task.priority, Task.id).all()
     return AjaxResult.successResult({'date': date, 'tasks': obj2Dict(tasks)})
 
@@ -43,43 +62,51 @@ def changestate(taskId, state):
     '''change task state'''
     if state not in ['Ongoing', 'Done', 'Cancel']:
         return AjaxResult.failResult("invalid state:" + state)
-    task = Task.query.filter_by(
-        user_code=current_user.username, id=taskId, state="ToDo").first()
+    task = Task.query.filter(Task.user_code == current_user.username,
+                             Task.id == taskId,
+                             Task.state.in_(["ToDo", "Ongoing"])).first()
     if task:
         now = datetime.datetime.now()
         task.updated_at = now
         task.state = state
         task.save()
-        if state == "Ongoing":
+        if task.type == "Plan" and state in ["ToDo", "Ongoing"]:
             date = now.date()
-            if task.date == date:
+            if now.hour > 20:
                 date = (now + datetime.timedelta(days=1)).date()
-            Task(task.content, date, task.priority, task.created_at).save()
+            t = Task.query.filter(
+                Task.user_code == current_user.username, Task.type == "Action",
+                Task.content == task.content, Task.date == date).first()
+            if not t:
+                t = Task(task.content, date, task.priority, task.created_at)
+                t.type = "Action"
+                t.save()
         return AjaxResult.successResult()
     else:
         return AjaxResult.failResult("未获取到相关任务")
 
 
-@taskBlueprint.route('/task/add/index', methods=['GET'])
+@taskBlueprint.route('/task/new', methods=['GET'])
 @login_required
 def addindex():
-    '''添加任务页面'''
     now = datetime.datetime.now()
-    date = now.strftime("%Y-%m-%d")
-    return render_template('task/addindex.html', date=date)
+    today = datetime.datetime.strftime(now, "%Y-%m-%d")
+    return render_template('task/addindex.html', date=today)
 
 
-@taskBlueprint.route('/task/add/do', methods=['POST'])
+@taskBlueprint.route('/task/new', methods=['POST'])
 @login_required
 def adddo():
     '''添加任务'''
     date = request.form['date']
     priority = request.form['priority']
     content = request.form['content']
-
-    task = Task(content, date, priority)
-    task.save()
-    return redirect(url_for('task.showNewTasks'))
+    if date and priority and content and content.strip():
+        task = Task(content.strip(), date, priority)
+        task.type = "Plan"
+        task.save()
+        return AjaxResult.successResult()
+    return AjaxResult.failResult("parameters error")
 
 
 if __name__ == '__main__':

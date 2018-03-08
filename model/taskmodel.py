@@ -14,6 +14,7 @@ class Task(db.Model, BaseMethod):
     id = db.Column(db.Integer, primary_key=True)
     priority = db.Column(db.String(32))  #A/B/C/D
     date = db.Column(db.Date)
+    type = db.Column(db.String(32))  #Plan/Action
     state = db.Column(db.String(32))  #ToDo/Ongoing/Done/Cancel
     content = db.Column(db.Text)
     user_code = db.Column(db.String(32))
