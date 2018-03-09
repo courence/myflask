@@ -33,6 +33,10 @@ i {
     background-position: -288px 0;
 }
 
+.icon-list {
+    background-position: -360px -48px;
+}
+
 /* 显示内容 block content
 ================================================== */
 basecontent{

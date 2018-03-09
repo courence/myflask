@@ -101,9 +101,12 @@ def adddo():
     date = request.form['date']
     priority = request.form['priority']
     content = request.form['content']
-    if date and priority and content and content.strip():
+    type = request.form['type']
+    if date and priority and content and content.strip() and type in [
+            "Plan", "Action"
+    ]:
         task = Task(content.strip(), date, priority)
-        task.type = "Plan"
+        task.type = type
         task.save()
         return AjaxResult.successResult()
     return AjaxResult.failResult("parameters error")
