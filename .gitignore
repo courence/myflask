@@ -4,3 +4,4 @@
 database/myflask.db
 test/
 static/data/
+nohup.out
