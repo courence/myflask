@@ -21,19 +21,6 @@
 			<div id='contentsign'></div>
 			<div class="line11"></div>
 			<p class="right">
-
-				<a href="/task/undo">
-					<i class="icon-indent-right"></i>
-				</a>
-				&nbsp;
-				<i class="icon-filter" id='id_date_proxy'>
-					<input style="width:0px;height:0px;border: white;" name='date' id='id_date' type='text' value='{{ today }}' />
-				</i>
-				&nbsp;
-				<a href="/task/new">
-					<i class="icon-plus"></i>
-				</a>
-				&nbsp;
 				<a href="/task/plan">
 					<i class="icon-list"></i>
 				</a>
@@ -98,8 +85,8 @@
 		}
 		if (force || window.date != date) {
 			window.date = date;
-			$("#id_title").html('The Task List Of ' + date);
-			HAjax.jsonGet({ url: '/task/' + date, success: successAction });
+			$("#id_title").html('The Unfinished Task List');
+			HAjax.jsonPost({ url: '/task/undo', success: successAction });
 		}
 	}
 
@@ -116,10 +103,6 @@
 	}
 
 	$(document).ready(function () {
-		showNewTasks();
-		HSelectDate.clickDate($("#id_date_proxy"), $("#id_date"));
-		$("#id_date").blur(function (e) {
-			showNewTasks();
-		});
+		showNewTasks(true);
 	});
 </script> {% endblock %}

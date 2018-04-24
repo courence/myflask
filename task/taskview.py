@@ -56,6 +56,26 @@ def getNewTasks(date):
     return AjaxResult.successResult({'date': date, 'tasks': obj2Dict(tasks)})
 
 
+@taskBlueprint.route('/task/undo', methods=['GET'])
+@login_required
+def showUndo():
+    '''show unfinished tasks'''
+    return render_template('task/undo.html')
+
+
+@taskBlueprint.route('/task/undo', methods=['POST'])
+@login_required
+def getUndo():
+    '''get unfinished tasks'''
+    username = current_user.username
+    date = datetime.date.today()
+    tasks = Task.query.filter(Task.user_code == username, Task.date < date,
+                              Task.type == "Action",
+                              Task.state.in_(["ToDo", "Ongoing"])).order_by(
+                                  Task.date, Task.priority, Task.id).all()
+    return AjaxResult.successResult({'date': date, 'tasks': obj2Dict(tasks)})
+
+
 @taskBlueprint.route('/task/<int:taskId>/<string:state>', methods=['PUT'])
 @login_required
 def changestate(taskId, state):
