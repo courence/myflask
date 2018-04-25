@@ -21,7 +21,7 @@ def showNewTasks():
     today = datetime.datetime.strftime(now, "%Y-%m-%d")
     username = current_user.username
     tasks = Task.query.filter(Task.user_code == username,
-                              Task.date < now.today(), Task.type == "Action",
+                              Task.date < now.date(), Task.type == "Action",
                               Task.state.in_(["ToDo", "Ongoing"])).all()
     if tasks:
         return render_template('task/undo.html')
