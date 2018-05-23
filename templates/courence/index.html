@@ -1,17 +1,32 @@
 {% extends "base.html" %} {% block content %}
 
-<section class="show-content" id='contentsign'>
+<section class="show-content">
     <div class="container">
         <div class="row">
-            <div>
 
-                <p class="right">
-                    <a href="/courence/add/index">
-                        <i class="icon-plus"></i>
-                    </a>
-                </p>
-                <div class="line11"></div>
+            <section class="show-content">
+                <div class="container">
+                    <div class="row">
+                        <div>
+
+                            <p class="right">
+                                <a href="/courence/add/index">
+                                    <i class="icon-plus"></i>
+                                </a>
+                            </p>
+                            <div class="line11"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id='contentsign'></div>
+
+            <div class="show-content">
+                <div class="mypage" id="id_mypage">
+                </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -36,6 +51,7 @@
 
 <script type="text/javascript" src="/static/js//common/myAjax.js"></script>
 <script type="text/javascript" src="/static/js//common/myString.js"></script>
+<script type="text/javascript" src="/static/js//common/myPage.js"></script>
 <script type="text/javascript">
     CurrentMenuName = "NOTEPAD";
 
@@ -45,7 +61,8 @@
             if (json.state) {
                 var content = $("signdiv").html();
                 var html = "";
-                var data = json.data;
+                var data = json.data.items;
+                var pageInfo = json.data.pageInfo;
                 for (var i = 0; i < data.length; i++) {
                     var d = {
                         '_content': data[i].content,
@@ -53,16 +70,18 @@
                     };
                     html += HString.replace(content, d);
                 }
-                $("#contentsign").after(html);
+                $("#contentsign").html(html);
+                HPage.init("id_mypage", "/courence/", "", pageInfo);
             }
             else {
                 console.error(JSON.stringify(json))
             }
         }
-        HAjax.jsonGet({ url: '/courence/latest', success: successAction });
+        HAjax.jsonPost({ url: '/courence/{{page}}', success: successAction });
     }
 
     $(document).ready(function () {
+
         showCourences();
     });
 </script> {% endblock %}

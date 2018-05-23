@@ -18,22 +18,28 @@ courenceBlueprint = Blueprint(
 #################################################################
 
 
-@courenceBlueprint.route('/courence/latest/index')
+@courenceBlueprint.route('/courence/<int:page>', methods=['GET'])
 @login_required
-def showLatest():
+def showLatest(page):
     '''显示最近日志信息页面'''
-    return render_template('courence/latestindex.html')
+    if page < 1:
+        page = 1
+
+    return render_template('courence/index.html', page=page)
 
 
-@courenceBlueprint.route('/courence/latest', methods=['GET'])
+@courenceBlueprint.route('/courence/<int:page>', methods=['POST'])
 @login_required
-def getLatest():
+def getCourences(page):
     '''获取最近日志信息'''
     pagination = Courence.query.filter_by(
         user_code=current_user.username).order_by(
             Courence.created_at.desc()).paginate(
-                1, per_page=10)
-    return AjaxResult.successResult(pagination.items)
+                page, per_page=10)
+    return AjaxResult.successResult({
+        'pageInfo': obj2Dict(pagination),
+        'items': obj2Dict(pagination.items)
+    })
 
 
 #############################################################
@@ -52,7 +58,7 @@ def addDo():
     '''添加日志'''
     content = request.form['content']
     Courence(content).save()
-    return redirect(url_for('courence.showLatest'))
+    return redirect(url_for('courence.showLatest', page=1))
 
 
 #############################################33333
