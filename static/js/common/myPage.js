@@ -64,20 +64,24 @@ var HPage = {
         $("#" + this.divId).html(pageHtml);
     },
     showPre: function () {
-        var min = this.range[0]
-        if (min > 1) {
-            this.range.unshift(min - 1);
-            this.range.pop();
-            this.show();
+        for (var i = 0; i < this.range.length; i++) {
+            var min = this.range[0]
+            if (min > 1) {
+                this.range.unshift(min - 1);
+                this.range.pop();
+            }
         }
+        this.show();
     },
     showNext: function () {
-        var max = this.range[this.range.length - 1];
-        if (this.pages > max) {
-            this.range.shift();
-            this.range.push(max + 1);
-            this.show();
+        for (var i = 0; i < this.range.length; i++) {
+            var max = this.range[this.range.length - 1];
+            if (this.pages > max) {
+                this.range.shift();
+                this.range.push(max + 1);
+            }
         }
+        this.show();
     },
     createRange: function (page, pages, len) {
         var range = [];
