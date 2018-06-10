@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 
-
+<section class="show-content">
 <div class="container gallery-container">
 
     <div>
@@ -13,15 +13,17 @@
     </div>
 
     <div class="tz-gallery">
-
         <div class="row" id='contentsign'>
-
-
-        </div>
-
+        </div>     
     </div>
 
+    <div class="show-content">
+        <div class="mypage" id="id_mypage">
+        </div>
+    </div>
 </div>
+</section>
+
 <signdiv>
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
@@ -44,6 +46,7 @@
 <link rel="stylesheet" href="/static/css/we/thumbnail-gallery.css">
 <script type="text/javascript" src="/static/js/common/myAjax.js"></script>
 <script type="text/javascript" src="/static/js/common/myString.js"></script>
+<script type="text/javascript" src="/static/js//common/myPage.js"></script>
 <script type="text/javascript" src="/static/js/plugin/common/baguetteBox.min.js"></script>
 <script type="text/javascript">
     CurrentMenuName = "WE";
@@ -53,7 +56,8 @@
             if (json.state) {
                 var content = $("signdiv").html();
                 var html = "";
-                var data = json.data;
+                var data = json.data.items;
+                var pageInfo = json.data.pageInfo;
                 for (var i = 0; i < data.length; i++) {
                     var d = {
                         '_content': data[i].content,
@@ -65,13 +69,14 @@
                 }
                 $("#contentsign").append(html);
                 baguetteBox.run('.tz-gallery');
+                HPage.init("id_mypage", "/we/", "", pageInfo);
             }
             else {
                 console.error(JSON.stringify(json))
             }
         }
 
-        HAjax.jsonGet({ url: '/we/latest', success: successAction });
+        HAjax.jsonPost({ url: '/we/{{page}}', success: successAction });
     }
 
     $(document).ready(function () {

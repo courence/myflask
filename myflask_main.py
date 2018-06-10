@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 from flask import render_template, session
 
 from appfactory import create_app
-import datetime
+import sys,datetime
 
 app = create_app()
 

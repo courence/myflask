@@ -7,28 +7,34 @@ Created on Jul 11, 2016
 import datetime, os
 from flask import Blueprint, render_template, g, redirect, url_for, request
 from flask_login import current_user, login_required
-from common.jsonresult import AjaxResult
+from common.jsonresult import AjaxResult, obj2Dict
 from model.weimagemodel import WeImage
 
 weBlueprint = Blueprint('we', __name__, template_folder='templates')
 
 
-@weBlueprint.route('/we/index', methods=['GET'])
+@weBlueprint.route('/we/<int:page>', methods=['GET'])
 @login_required
-def index():
+def index(page):
     '''显示待完成的任务页面'''
-    return render_template('we/index.html')
+    if page < 1:
+        page = 1
+    return render_template('we/index.html',page=page)
 
 
-@weBlueprint.route('/we/latest', methods=['GET'])
+@weBlueprint.route('/we/<int:page>', methods=['POST'])
 @login_required
-def getLatest():
+def getImage(page):
     '''获取最近日志信息'''
     pagination = WeImage.query.filter_by(
         user_code=current_user.username).order_by(
             WeImage.created_at.desc()).paginate(
-                1, per_page=10)
-    return AjaxResult.successResult(pagination.items)
+                page, per_page=12)
+    return AjaxResult.successResult({
+        'pageInfo': obj2Dict(pagination),
+        'items': obj2Dict(pagination.items)
+    })
+    # return AjaxResult.successResult(pagination.items)
 
 
 @weBlueprint.route('/we/add/index', methods=['GET'])

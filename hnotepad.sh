@@ -26,17 +26,17 @@ else
     exit 1
 fi
 
-workdir=$(cd $(dirname $0); pwd)
-
+#workdir=$(cd $(dirname $0); pwd)
+DIR=/Users/jianghai/mydoc/projects/src/myflask
 case $ACTION in
     --start)
         pids=`test`
         if [ "$pids" == "" ] 
         then
             echo "INFO: start Notepad ..."
-            DIR=$(dirname $(readlink -f "$0"))
+            #DIR=$(dirname $(readlink -f "$0"))
             cd $DIR
-	    ./myflask_main.py > database/log.txt 2>&1 &
+	        `python myflask_main.py > database/log.txt 2>&1 &`
             sleep 2
         fi
         printTest
