@@ -59,6 +59,6 @@ def upload_file():
         path = os.path.join(imgdir, imgName)
         image.save(path)
         WeImage(path, content).save()
-        return redirect(url_for('we.index'))
+        return redirect(url_for('we.index', page=1))
 
     return AjaxResult.failResult()
